@@ -8,8 +8,149 @@ datasource db {
 }
 
 model user {
-  usr_id     Int      @id @default(autoincrement())
-  username   String   @db.VarChar(45)
-  password   String   @db.VarChar(45)
-  created_at DateTime @default(now()) @db.Timestamp(0)
+  user_id           Int         @id @default(autoincrement())
+  username          String      @unique(map: "username_UNIQUE") @db.VarChar(50)
+  password          String      @db.VarChar(255)
+  phone_number      String      @unique(map: "phone_number_UNIQUE") @db.VarChar(45)
+  email             String      @unique(map: "email_UNIQUE") @db.VarChar(100)
+  registration_date DateTime?   @default(now()) @db.Timestamp(0)
+  bookmarks         bookmarks[]
+  profile           profile?
+  solutions         solutions?
+}
+
+model bookmarks {
+  user_id    Int
+  problem_id Int
+  problems   problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_bookmarks_problems")
+  user       user     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_bookmarks_user")
+
+  @@id([user_id, problem_id])
+  @@index([problem_id], map: "fk_bookmarks_problems1_idx")
+  @@index([user_id], map: "fk_bookmarks_user1_idx")
+}
+
+model examples {
+  examples_id       Int               @id @default(autoincrement())
+  problem_id        Int               @unique(map: "problem_id_UNIQUE")
+  input             String            @db.Text
+  output            String            @db.Text
+  original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_examples_problems")
+}
+
+model hints {
+  hint_id          Int      @id @default(autoincrement())
+  problem_id       Int      @unique(map: "problem_id_UNIQUE")
+  hint_description String   @db.Text
+  problems         problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_hints_problems")
+}
+
+model multiple_choices {
+  selection_id              Int                       @id @default(autoincrement())
+  problem_id                Int
+  selection                 String                    @db.Text
+  multiple_choices_problems multiple_choices_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_selections_multiple_choices_problems1")
+
+  @@index([problem_id], map: "fk_selections_multiple_choices_problems1_idx")
+}
+
+model multiple_choices_problems {
+  problem_id       Int                @id @default(autoincrement())
+  language         String             @db.VarChar(50)
+  solution_code    String             @db.Text
+  correct_choice   Int
+  multiple_choices multiple_choices[]
+  problems         problems           @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_multiple_choices_problems_problems1")
+
+  @@index([problem_id], map: "fk_multiple_choices_problems_problems1_idx")
+}
+
+model original_problems {
+  problem_id Int        @id @default(autoincrement())
+  examples   examples?
+  problems   problems   @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_original_problems_problems1")
+  testcases  testcases?
+
+  @@index([problem_id], map: "fk_original_problems_problems1_idx")
+}
+
+model ox_problems {
+  problem_id     Int                        @id @default(autoincrement())
+  language       String                     @db.VarChar(50)
+  solution_code  String                     @db.Text
+  correct_answer ox_problems_correct_answer
+  problems       problems                   @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_ox_problems")
+}
+
+model problems {
+  problem_id                Int                        @id @default(autoincrement())
+  description               String                     @db.Text
+  difficulty                problems_difficulty
+  created_at                DateTime                   @default(now()) @db.Timestamp(0)
+  time_limit                Decimal                    @db.Decimal(5, 2)
+  memory_limit              Int
+  algorithm_category        String                     @db.VarChar(50)
+  views                     Int
+  comments                  String?                    @db.Text
+  bookmarks                 bookmarks[]
+  hints                     hints?
+  multiple_choices_problems multiple_choices_problems?
+  original_problems         original_problems?
+  ox_problems               ox_problems?
+  short_answer_problems     short_answer_problems?
+  solutions                 solutions?
+}
+
+model profile {
+  profile_id      Int     @id @default(autoincrement())
+  user_id         Int     @unique(map: "user_id_UNIQUE")
+  nickname        String? @db.VarChar(50)
+  profile_picture String? @db.VarChar(255)
+  bio             String? @db.Text
+  user            user    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_profile_user")
+
+  @@index([user_id], map: "fk_profile_user_idx")
+}
+
+model short_answer_problems {
+  problem_id      Int      @id @default(autoincrement())
+  language        String   @db.VarChar(50)
+  solution_code   String   @db.Text
+  expected_answer String   @db.VarChar(255)
+  problems        problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_short_answer_problems_problems1")
+
+  @@index([problem_id], map: "fk_short_answer_problems_problems1_idx")
+}
+
+model solutions {
+  solution_id   Int      @id @default(autoincrement())
+  user_id       Int      @unique(map: "user_id_UNIQUE")
+  problem_id    Int      @unique(map: "problem_id_UNIQUE")
+  solution_code String?  @db.Text
+  is_correct    Int      @db.TinyInt
+  language      String?  @db.VarChar(50)
+  time_taken    Decimal? @db.Decimal(5, 2)
+  submitted_at  DateTime @default(now()) @db.Timestamp(0)
+  error_type    String?  @db.VarChar(255)
+  problems      problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_problems")
+  user          user     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_user")
+}
+
+model testcases {
+  testcase_id       Int               @id @default(autoincrement())
+  problem_id        Int               @unique(map: "problem_id_UNIQUE")
+  input             String            @db.Text
+  output            String            @db.Text
+  original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_testcases_problems")
+}
+
+enum problems_difficulty {
+  easy
+  medium
+  hard
+}
+
+enum ox_problems_correct_answer {
+  O
+  X
 }
