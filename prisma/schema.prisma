@@ -32,10 +32,12 @@ model bookmarks {
 
 model examples {
   examples_id       Int               @id @default(autoincrement())
-  problem_id        Int               @unique(map: "problem_id_UNIQUE")
+  problem_id        Int
   input             String            @db.Text
   output            String            @db.Text
   original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_examples_problems")
+
+  @@index([problem_id], map: "fk_examples_problems")
 }
 
 model hints {
@@ -66,10 +68,10 @@ model multiple_choices_problems {
 }
 
 model original_problems {
-  problem_id Int        @id @default(autoincrement())
-  examples   examples?
-  problems   problems   @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_original_problems_problems1")
-  testcases  testcases?
+  problem_id Int         @id @default(autoincrement())
+  examples   examples[]
+  problems   problems    @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_original_problems_problems1")
+  testcases  testcases[]
 
   @@index([problem_id], map: "fk_original_problems_problems1_idx")
 }
@@ -86,11 +88,11 @@ model problems {
   problem_id                Int                        @id @default(autoincrement())
   title                     String                     @db.VarChar(50)
   description               String                     @db.Text
-  limitations               String                     @db.Text
+  limitations               String?                    @db.Text
   difficulty                problems_difficulty
   created_at                DateTime                   @default(now()) @db.Timestamp(0)
-  time_limit                Decimal                    @db.Decimal(5, 2)
-  memory_limit              Int
+  time_limit                Decimal?                   @db.Decimal(5, 2)
+  memory_limit              Int?
   algorithm_category        String                     @db.VarChar(50)
   views                     Int
   comments                  String?                    @db.Text
@@ -140,10 +142,12 @@ model solutions {
 
 model testcases {
   testcase_id       Int               @id @default(autoincrement())
-  problem_id        Int               @unique(map: "problem_id_UNIQUE")
+  problem_id        Int
   input             String            @db.Text
   output            String            @db.Text
   original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_testcases_problems")
+
+  @@index([problem_id], map: "fk_testcases_problems")
 }
 
 enum problems_difficulty {
