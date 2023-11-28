@@ -8,15 +8,15 @@ datasource db {
 }
 
 model user {
-  user_id           Int         @id @default(autoincrement())
-  username          String      @unique(map: "username_UNIQUE") @db.VarChar(50)
-  password          String      @db.VarChar(255)
-  phone_number      String      @unique(map: "phone_number_UNIQUE") @db.VarChar(45)
-  email             String      @unique(map: "email_UNIQUE") @db.VarChar(100)
-  registration_date DateTime?   @default(now()) @db.Timestamp(0)
+  user_id           Int           @id @default(autoincrement())
+  username          String        @unique(map: "username_UNIQUE") @db.VarChar(50)
+  password          String        @db.VarChar(255)
+  phone_number      String        @unique(map: "phone_number_UNIQUE") @db.VarChar(45)
+  email             String        @unique(map: "email_UNIQUE") @db.VarChar(100)
+  registration_date DateTime?     @default(now()) @db.Timestamp(0)
   bookmarks         bookmarks[]
   profile           profile?
-  solutions         solutions?
+  submissions       submissions[]
 }
 
 model bookmarks {
@@ -42,9 +42,11 @@ model examples {
 
 model hints {
   hint_id          Int      @id @default(autoincrement())
-  problem_id       Int      @unique(map: "problem_id_UNIQUE")
+  problem_id       Int
   hint_description String   @db.Text
   problems         problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_hints_problems")
+
+  @@index([problem_id], map: "fk_hints_problems1_idx")
 }
 
 model multiple_choices {
@@ -97,12 +99,12 @@ model problems {
   views                     Int
   comments                  String?                    @db.Text
   bookmarks                 bookmarks[]
-  hints                     hints?
+  hints                     hints[]
   multiple_choices_problems multiple_choices_problems?
   original_problems         original_problems?
   ox_problems               ox_problems?
   short_answer_problems     short_answer_problems?
-  solutions                 solutions?
+  submissions               submissions[]
 }
 
 model profile {
@@ -127,17 +129,17 @@ model short_answer_problems {
 }
 
 model solutions {
-  solution_id   Int      @id @default(autoincrement())
-  user_id       Int      @unique(map: "user_id_UNIQUE")
-  problem_id    Int      @unique(map: "problem_id_UNIQUE")
-  solution_code String?  @db.Text
-  is_correct    Int      @db.TinyInt
-  language      String?  @db.VarChar(50)
-  time_taken    Decimal? @db.Decimal(5, 2)
-  submitted_at  DateTime @default(now()) @db.Timestamp(0)
-  error_type    String?  @db.VarChar(255)
-  problems      problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_problems")
-  user          user     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_user")
+  solution_id   Int         @id @default(autoincrement())
+  solution_code String?     @db.Text
+  is_correct    Int         @db.TinyInt
+  language      String?     @db.VarChar(50)
+  time_taken    Decimal?    @db.Decimal(5, 2)
+  submitted_at  DateTime    @default(now()) @db.Timestamp(0)
+  error_type    String?     @db.VarChar(255)
+  submission_id Int
+  submissions   submissions @relation(fields: [submission_id], references: [submission_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_submissions1")
+
+  @@index([submission_id], map: "fk_solutions_submissions1_idx")
 }
 
 model testcases {
@@ -148,6 +150,19 @@ model testcases {
   original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_testcases_problems")
 
   @@index([problem_id], map: "fk_testcases_problems")
+}
+
+model submissions {
+  submission_id Int         @id @default(autoincrement())
+  user_id       Int
+  problem_id    Int
+  answer        String      @db.Text
+  solutions     solutions[]
+  problems      problems    @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_submissions_problems1")
+  user          user        @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_submissions_user1")
+
+  @@index([problem_id], map: "fk_submissions_problems1_idx")
+  @@index([user_id], map: "fk_submissions_user1_idx")
 }
 
 enum problems_difficulty {
