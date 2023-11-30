@@ -14,6 +14,9 @@ export async function GET(request) {
                     },
                 },
             },
+            orderBy: {
+                problem_id : 'asc',
+            },
         })
 
         return Response.json(original_problems);
