@@ -15,6 +15,7 @@ model user {
   email             String        @unique(map: "email_UNIQUE") @db.VarChar(100)
   registration_date DateTime?     @default(now()) @db.Timestamp(0)
   bookmarks         bookmarks[]
+  comments          comments[]
   profile           profile?
   submissions       submissions[]
 }
@@ -97,8 +98,8 @@ model problems {
   memory_limit              Int?
   algorithm_category        String                     @db.VarChar(50)
   views                     Int
-  comments                  String?                    @db.Text
   bookmarks                 bookmarks[]
+  comments                  comments[]
   hints                     hints[]
   multiple_choices_problems multiple_choices_problems?
   original_problems         original_problems?
@@ -163,6 +164,18 @@ model submissions {
 
   @@index([problem_id], map: "fk_submissions_problems1_idx")
   @@index([user_id], map: "fk_submissions_user1_idx")
+}
+
+model comments {
+  comment_id Int      @id @default(autoincrement())
+  user_id    Int
+  problem_id Int
+  comment    String?  @db.Text
+  problems   problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comments_problems1")
+  user       user     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comments_user1")
+
+  @@index([problem_id], map: "fk_comments_problems1_idx")
+  @@index([user_id], map: "fk_comments_user1_idx")
 }
 
 enum problems_difficulty {
