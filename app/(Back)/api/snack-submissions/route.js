@@ -95,3 +95,52 @@ export async function POST(request) {
         });
 }
 
+
+/**
+ * @swagger
+ * /snack-submissions:
+ *   post:
+ *     summary: 스낵 문제에 대해 새 제출을 생성하고, 정답 여부에 따라 solution이 solutions에 생성됩니다
+ *     tags: [Snack]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: integer
+ *               problem_id:
+ *                 type: integer
+ *               answer:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 submissionsid:
+ *                   type: integer
+ *                 status:
+ *                   type: string
+ *                   example: "Success"
+ *       404:
+ *         description: No matching problem found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "Error"
+ *                 message:
+ *                   type: string
+ *                   example: "No matching problem found"
+ */
+    
+
