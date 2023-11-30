@@ -42,10 +42,10 @@
  */
     /*
     -- problems 테이블에 데이터 삽입
-    INSERT INTO problems (title, description, limitations, difficulty, created_at, time_limit, memory_limit, algorithm_category, views, comments)
+    INSERT INTO problems (title, description, limitations, difficulty, created_at, time_limit, memory_limit, algorithm_category, views)
     VALUES ('피보나치 수열', '피보나치 수열의 n번째 항을 출력하는 프로그램을 작성하시오.
     단, 피보나치 수열의 0번째 항은 0, 1번째 항은 1로 정의한다.', 
-    '입력되는 n은 45보다 작거나 같은 자연수이다.','medium', NOW(), 1.0, 128, '다이나믹 프로그래밍', 0, NULL);
+    '입력되는 n은 45보다 작거나 같은 자연수이다.','medium', NOW(), 1.0, 128, '다이나믹 프로그래밍', 0);
 
     -- problems 테이블에 삽입한 데이터의 problem_id 가져오기
     SET @problemId = last_insert_id();
