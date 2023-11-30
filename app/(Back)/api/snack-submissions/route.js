@@ -2,10 +2,10 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function correct(){
+async function correct(submission){
     const solutions = await prisma.solutions.create({
         data: {
-            is_correct : true,
+            is_correct : 1,
             submission_id : submission.submission_id,
         }
     })
@@ -13,10 +13,10 @@ async function correct(){
     return solutions
 }
 
-async function wrong(){
+async function wrong(submission){
     const solutions = await prisma.solutions.create({
         data: {
-            is_correct : false,
+            is_correct : 0,
             submission_id : submission.submission_id,
         }
     })
@@ -66,26 +66,26 @@ export async function POST(request) {
         }
         else if(ox_problems !== null){
             if(ox_problems.correct_answer == answer){
-                const solutions = correct();
+                correct(submission);
             }
             else{
-                const solutions = wrong();
+                wrong(submission);
             }
         }
         else if(short_answer_problems !== null){
             if(short_answer_problems.expected_answer == answer){
-                const solutions = correct();
+                correct(submission);
             }
             else{
-                const solutions = wrong();
+                wrong(submission);
             }
         }
         else if(multiple_choices_problems !== null){
             if(multiple_choices_problems.correct_choice == answer){
-                const solutions = correct();
+                correct(submission);
             }
             else{
-                const solutions = wrong();
+                wrong(submission);
             }
         }
 
