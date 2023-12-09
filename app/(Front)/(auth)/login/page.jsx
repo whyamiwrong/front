@@ -33,8 +33,9 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn(user_id, password) {
-  const handleAxios = async () => {
+export default function SignIn() {
+
+  const handleAxios = async (user_id, password) => {
     const res = await axios.post('/api/auth/login', {
       user_id: user_id,
       password: password
@@ -52,7 +53,7 @@ export default function SignIn(user_id, password) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('user_id'),
+      id: data.get('user_id'),
       password: data.get('password'),
     });
 

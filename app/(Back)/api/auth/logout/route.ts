@@ -9,7 +9,9 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
     `_TOKEN=; Path=/; Expires=-1; HttpOnly;`
   );
 
-  cookies().delete("_TOKEN");
+  if (cookies().has("_TOKEN")) {
+    cookies().delete("_TOKEN");
+  }
 
   return _res;
 }

@@ -1,5 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
+import axios from "axios";
 
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
@@ -11,6 +12,17 @@ import { Box, Button } from "@mui/material";
 
 export default function Header({ auth_user = false }) {
   const pathname = usePathname();
+
+  const handleLogout = async () => {
+    const res = await axios.get("/api/auth/logout");
+
+    if (res.status !== 200) {
+      alert("로그아웃에 실패했습니다.");
+      return;
+    } else {
+      window.location.href = "/";
+    }
+  }
 
   if (pathname.startsWith("/login") || pathname.startsWith("/api")) {
     return <></>;
@@ -50,8 +62,8 @@ export default function Header({ auth_user = false }) {
               </>
             ) : (
               <>
-                <Button variant="outlined">{auth_user?.id} 로그아웃</Button>
-                <Button variant="contained" sx={{boxShadow: 'none'}}>내 정보</Button>
+                <Button variant="outlined" onClick={handleLogout}>{auth_user?.id} 로그아웃</Button>
+                <Button variant="contained" sx={{boxShadow: 'none'}} href="/my_info">내 정보</Button>
               </>
             )}
           </Box>
