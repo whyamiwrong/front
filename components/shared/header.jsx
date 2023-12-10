@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Box, Button } from "@mui/material";
+import Link from "next/link";
 
 export default function Header({ auth_user = false }) {
   const pathname = usePathname();
@@ -34,9 +35,11 @@ export default function Header({ auth_user = false }) {
         <Toolbar sx={{ backgroundColor: "background.paper", display: 'flex', gap: '8px' }}>
           {/* Left Side */}
           <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'row' }}>
-            <Typography variant="h6" color="text.primary" sx={{ mr: '16px' }}>
-              WhyamiWrong
-            </Typography>
+            <Link href="/" style={{ textDecoration: 'none' }}>
+              <Typography variant="h6" color="text.primary" sx={{ mr: '16px' }}>
+                WhyamiWrong
+              </Typography>
+            </Link>
             <Box sx={{ display: 'flex', gap: '16px' }}>
               <Button href="/algorithm">
                 Algorithm
