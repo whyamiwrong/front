@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import ThemeRegistry from "components/ThemeRegistry/ThemeRegistry";
 
-import Header from "components/shared/header";
+import Header from "components/auth/header";
 import Menu from "components/shared/menu";
 import Wrapper from "@/components/shared/wrapper";
 
@@ -21,7 +21,7 @@ export default function RootLayout({
       <body>
         <ThemeRegistry>
           <Header />
-          <Menu />
+          {/* <Menu /> */}
           <Wrapper>{children}</Wrapper>
         </ThemeRegistry>
       </body>
