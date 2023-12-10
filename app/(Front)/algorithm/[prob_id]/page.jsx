@@ -138,7 +138,7 @@ export default function Algorithm({ params }) {
         </Grid>
         <Grid item xs={6}>
           <Editor
-            height="75vh"
+            height="100%"
             language="python"
             theme="vs-dark"
             onMount={handleEditorDidMount}
