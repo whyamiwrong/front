@@ -18,6 +18,10 @@ import Margin from "../../components/Margin/Margin";
 import Image from "next/image";
 import AdSlider from "../../components/Card/AdCard/AdCard";
 import { RecoilRoot } from "recoil";
+import Horizon from "../../components/Horizon/Horizon";
+import MainTitle from "../../components/MainTitle/MainTitle";
+import Typo from "@/components/Typo/Typo";
+import CodeReviewCard from "../../components/Card/CodeReviewCard/CodeReviewCard"
 
 
 //import Header from "../../components/Header/Header"; 라우팅 이해필요..
@@ -35,7 +39,14 @@ const Wrapper = styled.div`
 const SliderXwrapper2 = styled.div`
   position: relative;
   overflow-x: scroll;
-  min-height: 330px;
+  min-height: 300px;
+  width: 100%;
+  scroll-snap-type: x mandatory;
+`;
+const SliderXwrapper = styled.div`
+  position: relative;
+  overflow-x: scroll;
+  min-height: 360px;
   width: 100%;
   scroll-snap-type: x mandatory;
 `;
@@ -54,6 +65,8 @@ export default function HomePage() {
   return (
 <RecoilRoot>
         <AdSlider />
+        <Margin height="10" />
+        <MainTitle text="인기있는 알고리즘 풀러 가볼까요? >" />
         <SliderXwrapper2>
           <SliderXItems>
          
@@ -81,8 +94,144 @@ export default function HomePage() {
                category2={"Mathmatics"}
                num={13}
              />
+             <MainCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"입출력과 사칙연산"}
+               category={"수학"}
+               category2={"Mathmatics"}
+               num={13}
+             />
+             <MainCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"입출력과 사칙연산"}
+               category={"수학"}
+               category2={"Mathmatics"}
+               num={13}
+             />
           </SliderXItems>
           </SliderXwrapper2>
+
+
+          <MainTitle text="Snack Quiz? >" />
+          <SliderXwrapper2>
+          <SliderXItems>
+         
+              <MainCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"입출력과 사칙연산"}
+               category={"수학"}
+               category2={"Mathmatics"}
+               num={13}
+             />
+             <MainCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"입출력과 사칙연산"}
+               category={"수학"}
+               category2={"Mathmatics"}
+               num={13}
+             />
+             <MainCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"입출력과 사칙연산"}
+               category={"수학"}
+               category2={"Mathmatics"}
+               num={13}
+             />
+             <MainCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"입출력과 사칙연산"}
+               category={"수학"}
+               category2={"Mathmatics"}
+               num={13}
+             />
+             <MainCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"입출력과 사칙연산"}
+               category={"수학"}
+               category2={"Mathmatics"}
+               num={13}
+             />
+          </SliderXItems>
+          </SliderXwrapper2>
+
+          <MainTitle text="My CodeReviews >" />
+          <SliderXwrapper>
+          <SliderXItems>
+         
+              <CodeReviewCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
+               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
+               //category={"수학"}
+               //category2={"Mathmatics"}
+               //num={13}
+             />
+             <CodeReviewCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
+               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
+               //category={"수학"}
+               //category2={"Mathmatics"}
+               //num={13}
+             />
+             <CodeReviewCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
+               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
+               //category={"수학"}
+               //category2={"Mathmatics"}
+               //num={13}
+             />
+             <CodeReviewCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
+               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
+               //category={"수학"}
+               //category2={"Mathmatics"}
+               //num={13}
+             />
+             <CodeReviewCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
+               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
+               //category={"수학"}
+               //category2={"Mathmatics"}
+               //num={13}
+             />
+             <CodeReviewCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
+               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
+               //category={"수학"}
+               //category2={"Mathmatics"}
+               //num={13}
+             />
+             <CodeReviewCard
+              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
+               image={"https://source.unsplash.com/random"}
+               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
+               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
+               //category={"수학"}
+               //category2={"Mathmatics"}
+               //num={13}
+             />
+          </SliderXItems>
+          </SliderXwrapper>
+
+      <Margin height="100" />
         
       <Box sx={{ display: "flex" }}>
       

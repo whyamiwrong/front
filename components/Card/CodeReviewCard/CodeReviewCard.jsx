@@ -19,12 +19,12 @@ const CardEach = styled.div`
   background-color: white;
   align-items: center;
   box-sizing: border-box;
-  height: 270px;
-  width: 300px;
+  height: 340px;
+  width: 320px;
   @media (max-width: 1440px) {
-    width: 300px;
+    width: 320px;
   }
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   margin: 9px;
   box-shadow: 8px 8px 8px 5px rgba(67, 0, 209, 0.05);
@@ -41,10 +41,10 @@ const Thumbnail = styled.div`
   background-position: center center;
   background-repeat: no-repeat;
   background-color: none;
-  border-radius: 10px;
+  border-radius: 5px;
 
 
-  height: 200px;
+  height: 170px;
   width: 100%;
 `;
 
@@ -73,25 +73,40 @@ const TextWrapper2 = styled.div`
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5px;
+  justify-content: left;
+  align-items: left;
+  margin-top: 10px;
   margin-bottom: 5px;
-  width: 80%;
+  width: 90%;
   font-size: 1rem;
   font-weight: 600;
 `;
+const MainWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 90%;
+  font-size: 0.8rem;
+  font-weight: 500;
+`;
 const TextBox = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
+  display: flex;
+  flex-direction: row;
+//  align-items: start;
+ // justify-content: start;
+ // grid-template-columns: 1fr 2fr;
   column-gap: 60px;
   width: 90%;
   padding-left: 15px;
 `;
 
-const MainCard = ({
+const CodeReviewCard = ({
   image,
   title,
+  main,
   category,
   category2,
   num,
@@ -104,6 +119,10 @@ const MainCard = ({
       <TitleWrapper>
         {title}
       </TitleWrapper>
+      <MainWrapper>
+        {main}
+      </MainWrapper>
+   
       <TextBox>
         <TextWrapper>
           <Margin height="6" />
@@ -112,15 +131,15 @@ const MainCard = ({
           {category2}
         </TextWrapper>
 
-        <TextWrapper2>
+        <TextWrapper>
           <Margin height="6" />
-          {num}문제
+          {num}
           <Margin height="5" />
           
-        </TextWrapper2>
+        </TextWrapper>
       </TextBox>
     </CardEach>
   );
 };
 
-export default MainCard;
+export default CodeReviewCard;
