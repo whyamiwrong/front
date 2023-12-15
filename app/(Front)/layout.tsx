@@ -1,3 +1,4 @@
+
 import './globals.css';
 
 import * as React from "react";
@@ -7,6 +8,7 @@ import ThemeRegistry from "components/ThemeRegistry/ThemeRegistry";
 import Header from "components/auth/header";
 import Menu from "components/shared/menu";
 import Wrapper from "@/components/shared/wrapper";
+import { RecoilRoot } from 'recoil';
 
 export const metadata = {
   title: "맞왜틀",
@@ -19,6 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    
     <html lang="ko-KR">
       <body>
         <ThemeRegistry>
@@ -28,5 +31,6 @@ export default function RootLayout({
         </ThemeRegistry>
       </body>
     </html>
+  
   );
 }
