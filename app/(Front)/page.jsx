@@ -227,7 +227,7 @@ export default function HomePage() {
                //category={"수학"}
                //category2={"Mathmatics"}
                //num={13}
-             />
+             /> 
           </SliderXItems>
           </SliderXwrapper>
 
