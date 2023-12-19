@@ -13,7 +13,6 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import MediaCard from "components/MediaCard";
 import MainCard from "components/Card/MainCard/MainCard";
-import WhyWrongLogo2 from "../../public/img/Logo/WhyWrongLogo2.png";
 import Margin from "../../components/Margin/Margin";
 import Image from "next/image";
 import AdSlider from "../../components/Card/AdCard/AdCard";
@@ -72,7 +71,10 @@ export default function HomePage() {
          
               <MainCard
               // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
+               //image={"/logo_512x512.png"}
+//               image={"/img/Logo/WhyWrongLogo2.png"}
+               image={"/img/Logo/WhyWrongLogo.png"}
+
                title={"입출력과 사칙연산"}
                category={"수학"}
                category2={"Mathmatics"}

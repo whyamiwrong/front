@@ -3,7 +3,8 @@ import { atom } from "recoil";
 export const adImgs = atom({
     key: "adImgs",
     default: [
-      "public/logo_512x512.png",
+      "/img/Logo/WhyWrongLogo2.png",
+      "/img/Logo/WhyWrongLogo.png",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
