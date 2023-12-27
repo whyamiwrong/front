@@ -9,7 +9,7 @@ export async function POST(req, res) {
 
   const { user_id, password } = data;
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where:{
       username : user_id,
     },
