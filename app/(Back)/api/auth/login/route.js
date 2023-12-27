@@ -1,10 +1,27 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { PrismaClient } from "@prisma/client";
 import { sign } from "@/lib/jwt";
+
+const prisma = new PrismaClient();
 
 export async function POST(req, res) {
   const data = await req.json();
+
   const { user_id, password } = data;
 
+  const user = await prisma.user.findUnique({
+    where:{
+      username : user_id,
+    },
+  });
+
+  if(user == null){
+    throw new Error("User not found")
+  } 
+  else if(password != user.password){
+    throw new Error("Invalid password");
+  }
+  else{
   const token = sign(user_id);
 
   let _res = new Response(JSON.stringify({ user_id, token }));
@@ -16,7 +33,9 @@ export async function POST(req, res) {
   );
 
   return _res;
+  }
 }
+
 
 /**
  * @swagger
