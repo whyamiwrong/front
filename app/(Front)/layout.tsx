@@ -10,8 +10,9 @@ import Menu from "components/shared/menu";
 import Wrapper from "@/components/shared/wrapper";
 import { RecoilRoot } from 'recoil';
 
+
 export const metadata = {
-  title: "맞왜틀",
+  title: "WhyisWrong",
   description: "맞았는데 왜 틀렸지?",
 };
 
@@ -23,13 +24,16 @@ export default function RootLayout({
   return (
     
     <html lang="ko-KR">
-      <body>
-        <ThemeRegistry>
-          <Header />
-          {/* <Menu /> */}
-          <Wrapper>{children}</Wrapper>
-        </ThemeRegistry>
-      </body>
+     
+        <body> 
+         
+          <ThemeRegistry>
+            <Header />
+            {/* <Menu /> */}
+            <Wrapper>{children}</Wrapper>
+          </ThemeRegistry>
+        </body>
+ 
     </html>
   
   );
