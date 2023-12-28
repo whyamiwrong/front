@@ -51,7 +51,7 @@ function AdSlider() {
       <AnimatePresence>
         <Items variants={itemsVariants} initial="hidden" animate="visible">
           {adimgs.map((i, index) => {
-            return <Item variants={itemVariants} bgimg={adimgs[index]}></Item>;
+            return <Item key={index} variants={itemVariants} bgimg={adimgs[index]}></Item>;
           })}
         </Items>
       </AnimatePresence>
