@@ -85,12 +85,12 @@ model problems {
   title                     String                     @db.VarChar(50)
   description               String                     @db.MediumText
   limitations               String?                    @db.MediumText
-  difficulty                problems_difficulty
+  difficulty                problems_difficulty        @default(easy)
   created_at                DateTime                   @default(now()) @db.Timestamp(0)
   time_limit                Decimal?                   @db.Decimal(5, 2)
   memory_limit              Int?
   algorithm_category        String                     @db.VarChar(50)
-  views                     Int
+  views                     Int                        @default(0)
   bookmarks                 bookmarks[]
   comments                  comments[]
   hints                     hints[]
@@ -167,6 +167,28 @@ model comments {
 
   @@index([problem_id], map: "fk_comments_problems1")
   @@index([user_id], map: "fk_comments_user1")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model snack {
+  snack_id   Int          @id @default(autoincrement())
+  title      String?      @db.VarChar(100)
+  views      Int          @default(0)
+  snack_quiz snack_quiz[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model snack_quiz {
+  snack_quiz_id Int     @id @default(autoincrement())
+  snack_id      Int
+  title         String? @db.VarChar(100)
+  description   String? @db.Text
+  selections    Json?
+  created_by    Int?
+  tag           Json?
+  snack         snack   @relation(fields: [snack_id], references: [snack_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_snack_quiz_snack")
+
+  @@index([snack_id], map: "fk_snack_quiz_snack_idx")
 }
 
 enum problems_difficulty {
