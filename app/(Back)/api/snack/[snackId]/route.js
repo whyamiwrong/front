@@ -11,6 +11,19 @@ export async function GET(req, {params }) {
             }
         });
 
+        const snacks = await prisma.snack.updateMany({
+            where:{
+                snack_id : parseInt(snack_id),
+            },
+            data: {
+                views: {
+                    increment: 1,
+                },
+            },
+        });
+
+        
+
         return Response.json(snack_quizs);
 }
 
@@ -18,7 +31,7 @@ export async function GET(req, {params }) {
  * @swagger
  * /snack/{snackId}:
  *   get:
- *     summary: 특정 스낵에 대한 퀴즈 목록을 반환합니다.
+ *     summary: 특정 스낵에 대한 퀴즈 목록을 반환하고, 해당 스낵의 조회수를 증가시킵니다.
  *     tags: [Snack]
  *     parameters:
  *       - in: path
