@@ -8,16 +8,16 @@ datasource db {
 }
 
 model user {
-  user_id           Int           @id @default(autoincrement())
-  username          String        @db.VarChar(50)
-  password          String        @db.VarChar(255)
-  phone_number      String        @db.VarChar(45)
-  email             String        @db.VarChar(100)
-  registration_date DateTime?     @default(now()) @db.Timestamp(0)
+  user_id           Int         @id @default(autoincrement())
+  username          String      @db.VarChar(50)
+  password          String      @db.VarChar(255)
+  phone_number      String      @db.VarChar(45)
+  email             String      @db.VarChar(100)
+  registration_date DateTime?   @default(now()) @db.Timestamp(0)
   bookmarks         bookmarks[]
   comments          comments[]
   profile           profile[]
-  submissions       submissions[]
+  solutions         solutions[]
 }
 
 model bookmarks {
@@ -98,7 +98,6 @@ model problems {
   original_problems         original_problems?
   ox_problems               ox_problems?
   short_answer_problems     short_answer_problems?
-  submissions               submissions[]
 }
 
 model profile {
@@ -121,17 +120,15 @@ model short_answer_problems {
 }
 
 model solutions {
-  solution_id   Int         @id @default(autoincrement())
-  solution_code String?     @db.Text
-  is_correct    Int         @db.TinyInt
-  language      String?     @db.VarChar(50)
-  time_taken    Decimal?    @db.Decimal(5, 2)
-  submitted_at  DateTime    @default(now()) @db.Timestamp(0)
-  error_type    String?     @db.VarChar(255)
-  submission_id Int
-  submissions   submissions @relation(fields: [submission_id], references: [submission_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_submissions1")
+  solution_id   Int        @id @default(autoincrement())
+  snack_quiz_id Int
+  user_id       Int
+  is_correct    Int        @db.TinyInt
+  snack_quiz    snack_quiz @relation(fields: [snack_quiz_id], references: [snack_quiz_id], onUpdate: Restrict, map: "fk_solutions_snack_quiz")
+  user          user       @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_user")
 
-  @@index([submission_id], map: "fk_solutions_submissions1")
+  @@index([snack_quiz_id], map: "fk_solutions_snack_quiz")
+  @@index([user_id], map: "fk_solutions_user_idx")
 }
 
 model testcases {
@@ -142,19 +139,6 @@ model testcases {
   original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: Restrict, map: "fk_testcases_problems")
 
   @@index([problem_id], map: "fk_testcases_problems")
-}
-
-model submissions {
-  submission_id Int         @id @default(autoincrement())
-  user_id       Int
-  problem_id    Int
-  answer        String      @db.Text
-  solutions     solutions[]
-  problems      problems    @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_submissions_problems1")
-  user          user        @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_submissions_user1")
-
-  @@index([problem_id], map: "fk_submissions_problems1")
-  @@index([user_id], map: "fk_submissions_user1")
 }
 
 model comments {
@@ -179,14 +163,15 @@ model snack {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model snack_quiz {
-  snack_quiz_id Int     @id @default(autoincrement())
+  snack_quiz_id Int         @id @default(autoincrement())
   snack_id      Int
-  title         String? @db.VarChar(100)
-  description   String? @db.Text
+  title         String?     @db.VarChar(100)
+  description   String?     @db.Text
   selections    Json?
   created_by    Int?
   tag           Json?
-  snack         snack   @relation(fields: [snack_id], references: [snack_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_snack_quiz_snack")
+  snack         snack       @relation(fields: [snack_id], references: [snack_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_snack_quiz_snack")
+  solutions     solutions[]
 
   @@index([snack_id], map: "fk_snack_quiz_snack_idx")
 }
