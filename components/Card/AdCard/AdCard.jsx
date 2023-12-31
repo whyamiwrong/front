@@ -27,7 +27,7 @@ const itemsVariants = {
     opacity: 1,
     transition: {
       delay: 0.5,
-      staggerChildren: 3,
+      staggerChildren: 5, //delay 시간 설정
       repeat: Infinity,
     },
   },
