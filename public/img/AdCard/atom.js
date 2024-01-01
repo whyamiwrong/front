@@ -3,6 +3,12 @@ import { atom } from "recoil";
 export const adImgs = atom({
     key: "adImgs",
     default: [
+      "/img/Result/result1.svg",
+      "/img/Logo/WhyWrongLogo2.png",
+      "/img/AdCard/AD1.png",
+      "/img/AdCard/AD2.png",
+      "/img/AdCard/AD3.png",
+      "https://source.unsplash.com/random",
       "/img/Logo/WhyWrongLogo2.png",
       "/img/AdCard/AD1.png",
       "/img/AdCard/AD2.png",
