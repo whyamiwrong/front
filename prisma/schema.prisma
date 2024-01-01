@@ -13,6 +13,7 @@ model user {
   password          String      @db.VarChar(255)
   phone_number      String      @db.VarChar(45)
   email             String      @db.VarChar(100)
+  solved            Int?        @default(0)
   registration_date DateTime?   @default(now()) @db.Timestamp(0)
   bookmarks         bookmarks[]
   comments          comments[]

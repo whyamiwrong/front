@@ -23,7 +23,7 @@ export async function POST(req, { params }) {
         where: {
             snack_quiz_id: snack_quiz_id,
         },
-    })
+    });
 
     const obj = snack_quiz.selections;
 
@@ -31,7 +31,17 @@ export async function POST(req, { params }) {
 
     if(obj.answer == selection){
         is_correct = 1;
-    }
+        const users = await prisma.user.updateMany({
+            where: {
+                user_id : user_id,
+            },
+            data: {
+                solved: {
+                    increment : 1,
+                },
+            },
+        });
+    };
 
     const solutions = await prisma.solutions.create({
         data: {
