@@ -11,6 +11,19 @@ export async function GET(req, {params }) {
             }
         });
 
+        const snacks = await prisma.snack.updateMany({
+            where:{
+                snack_id : parseInt(snack_id),
+            },
+            data: {
+                views: {
+                    increment: 1,
+                },
+            },
+        });
+
+        
+
         return Response.json(snack_quizs);
 }
 
@@ -18,7 +31,7 @@ export async function GET(req, {params }) {
  * @swagger
  * /snack/{snackId}:
  *   get:
- *     summary: 특정 스낵에 대한 퀴즈 목록을 반환합니다.
+ *     summary: 특정 스낵에 대한 퀴즈 목록을 반환하고, 해당 스낵의 조회수를 증가시킵니다.
  *     tags: [Snack]
  *     parameters:
  *       - in: path
@@ -42,7 +55,7 @@ export async function GET(req, {params }) {
  *                   2: "배열의 특정 위치에 원소를 삽입할 때에는 O(1) 시간이 소요된다."
  *                   3: "배열의 특정 위치에 원소를 삭제할 때에는 O(1) 시간이 소요된다."
  *                   4: "배열의 연속한 원소들은 연속한 메모리 공간에 위치한다."
- *                 answer: "4"
+ *                   answer: "4"
  *                 created_by: null
  *                 tag:
  *                   1: "자료구조"
@@ -54,7 +67,7 @@ export async function GET(req, {params }) {
  *                 selections:
  *                   1: "O"
  *                   2: "X"
- *                 answer: "1"
+ *                   answer: "1"
  *                 created_by: null
  *                 tag:
  *                   1: "배열"
