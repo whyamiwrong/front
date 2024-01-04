@@ -15,6 +15,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Button
 } from "@mui/material";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
@@ -64,6 +65,7 @@ export default function Algorithm({ params }) {
   const [code, setCode] = React.useState("");
   const [language, setLanguage] = React.useState("cpp");
   const [isLoading, setIsLoading] = React.useState(true);
+  const [submitResult, setSubmitResult] = React.useState([]);
   const [loadError, setLoadError] = React.useState(false);
 
   const [problem_data, setProblemData] = React.useState(null);
@@ -107,7 +109,8 @@ export default function Algorithm({ params }) {
       code: code,
       language: language,
     });
-    console.log(code);
+    
+    setSubmitResult([{ time: new Date().toLocaleString(), correct: res.data.correct }, ...submitResult]);
   }
 
   return !isLoading ? (
@@ -160,7 +163,7 @@ export default function Algorithm({ params }) {
               <Typography variant="h6">예제 입출력</Typography>
               <Divider />
               {problem_data.examples.map((io, index) => (
-                <Box key={index} sx={{ marginLeft: "8px" }}>
+                <Box key={index} sx={{ marginLeft: "8px", backgroundColor: "#f4f4f4", padding: "8px", borderRadius: "8px", marginTop: "8px", marginRight: "16px" }}>
                   <Typography variant="body2">
                     <strong>입력</strong>
                   </Typography>
@@ -183,10 +186,25 @@ export default function Algorithm({ params }) {
                 </Typography>
               {/* ))} */}
             </Box>
-            <Box>
-              <button onClick={() => {
+            <Box sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              borderRadius: "8px",
+              padding: "8px",
+              backgroundColor: "#f4f4f4",
+            }}>
+              <Button variant="contained" color="success" onClick={() => handleSendCode()}>
+                제출
+              </Button>
+              {/* <button onClick={() => {
                 handleSendCode()
-              }}>제출</button>
+              }}>제출</button> */}
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", height: "200px", overflowY: "scroll"}}>
+                {submitResult.map((result, index) => (
+                  <SubmitRecord key={index} time={result.time} correct={result.correct} />
+                ))}
+              </Box>
             </Box>
           </Box>
         </Grid>
@@ -244,4 +262,28 @@ export default function Algorithm({ params }) {
       <Box sx={{ position: "fixed" }}>{loadError && <LoadError />}</Box>
     </Backdrop>
   );
+}
+
+
+const SubmitRecord = ({ time, correct }) => {
+  const isCorrect = correct == 1 ? true : false;
+
+  return (
+    <Box sx={{
+      display: "flex",
+      flexDirection: "row",
+      borderRadius: "8px",
+      padding: "4px",
+      backgroundColor: isCorrect ? "#ebffeb" : "#fdebeb",
+      border: "1px solid #f4f4f4",
+      justifyContent: "space-between",
+    }}>
+      <Typography variant="body2">
+        {time}
+      </Typography>
+      <Typography variant="body2" sx={{color: isCorrect ? "green" : "gray"}}>
+        {isCorrect ? "맞았습니다!!!" : "틀렸습니다"}
+      </Typography>
+    </Box>
+  )
 }
