@@ -153,6 +153,7 @@ export async function POST(request, { params } ){
     if(result.correct==1){
         console.log("happy")
         await update_solved()
+        console.log("muyaho")
     }
     else console.log(result.correct)
     return Response.json(result)
@@ -160,26 +161,26 @@ export async function POST(request, { params } ){
 
 async function update_solved(){
     
-    const {user_id, username} = getVerified();
-    console.log(user_id)
-    console.log(username)
-    if(!user_id||!username){
+    try{
+        const {user_id, username} = getVerified();
+        const solved = await prisma.user.update({
+            where : {
+                username : username,
+                user_id:user_id
+            },
+            data: {
+                solved:{
+                    increment:1,
+                }
+            }
+        })
+        console.log("success")
+        console.log(solved.solved)
+    } catch(e){
         return
     }
-    const solved = await prisma.user.update({
-        where : {
-            username : username,
-            user_id:user_id
-        },
-        data: {
-            solved:{
-                increment:1,
-            }
-        }
-    })
-    console.log("success")
-    console.log(solved.solved)
 }
+    
 
 
 // model testcases {
