@@ -60,7 +60,7 @@ export default function Snack() {
             <MainTitle text="SNACK QUIZ" />
             <Wrapper1>
               {snackData.map((item) => (
-                <Link href={`/snack-quiz/${item.snack_id}`} key={item.snack_id} style={{ textDecoration: 'none' }}>
+                <Link href={`/snack-quiz/${item.snack_id}?title=${item.title}`} key={item.snack_id} style={{ textDecoration: 'none' , textDecorationColor: 'none'}}>
                   <MainQuizCard
                     image={`https://source.unsplash.com/random?${item.snack_id}`}
                     title={item.title}

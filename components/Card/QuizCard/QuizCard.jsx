@@ -111,7 +111,7 @@ const TextWrapper2 = styled.div`
 
 `;
 
-const Botton = styled.div`
+/*const Botton = styled.div`
   display: flex;
   padding-left: 10px;
   flex-direction: row;
@@ -130,6 +130,24 @@ const Botton = styled.div`
 
   //box-shadow: 8px 8px 8px 5px rgba(67, 0, 209, 0.05);
   //scroll-snap-align: center;  
+`;*/
+const Botton = styled.div`
+    display: flex;
+    padding-left: 10px;
+    flex-direction: row;
+    background-color: ${({ selected }) => (selected ? "#6B308F" : "#F7EDFD")}; // 선택된 버튼에 따라 배경색 변경
+    align-items: start;
+    box-sizing: border-box;
+    flex: wrap;
+    width: 97%;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 9px;
+    transition: background-color 0.3s, border 0.3s; // 애니메이션 효과 추가
+
+    &:hover {
+        background-color: ${({ selected }) => (selected ? "#6B308F" : "#ffffff")};
+    }
 `;
 const BottonWrapper = styled.div`
   display: flex;
@@ -140,9 +158,124 @@ const BottonWrapper = styled.div`
   width: 100%;
 
 `;
-
-
 const QuizCard = ({
+    quizId, // 퀴즈 아이디 추가
+    image,
+    quiz_title,
+    text,
+    b1,
+    b2,
+    b3,
+    b4,
+    selectedButton,
+    onButtonClick,
+    onClick,
+}) => {
+
+    return (
+        <CardEach onClick={onClick}>
+            <TitleWrapper>{quiz_title}</TitleWrapper>
+            <Horizon width="99%" color="gray" />
+            <Margin height="20" />
+
+            <TextBox1>
+                <TextWrapper>{text}</TextWrapper>
+            </TextBox1>
+            <Margin height="10" />
+            <BottonWrapper>
+                {b1 && (
+                    <Botton
+                        selected={selectedButton === 1}
+                        onClick={() => onButtonClick(quizId, 1)} // 퀴즈 아이디 전달
+                    >
+                        <Typo color={selectedButton === 1 ? "white" : "black"}>{b1}</Typo>
+                    </Botton>
+                )}
+                {b2 && (
+                    <Botton
+                        selected={selectedButton === 2}
+                        onClick={() => onButtonClick(quizId, 2)}
+                    >
+                        <Typo color={selectedButton === 2 ? "white" : "black"}>{b2}</Typo>
+                    </Botton>
+                )}
+                {b3 && (
+                    <Botton
+                        selected={selectedButton === 3}
+                        onClick={() => onButtonClick(quizId, 3)}
+                    >
+                        <Typo color={selectedButton === 3 ? "white" : "black"}>{b3}</Typo>
+                    </Botton>
+                )}
+                {b4 && (
+                    <Botton
+                        selected={selectedButton === 4}
+                        onClick={() => onButtonClick(quizId, 4)}
+                    >
+                        <Typo color={selectedButton === 4 ? "white" : "black"}>{b4}</Typo>
+                    </Botton>
+                )}
+            </BottonWrapper>
+        </CardEach>
+    );
+};
+
+
+export default QuizCard;
+/*const QuizCard = ({
+    image,
+    quiz_title,
+    text,
+    code,
+    b1,
+    b2,
+    b3,
+    b4,
+    category,
+    category2,
+    num,
+    onClick,
+  }) => {
+    // const navigate = useNavigate();
+  
+    return (
+      <CardEach onClick={onClick}>
+        <TitleWrapper>{quiz_title}</TitleWrapper>
+        <Horizon width="99%" color="gray" />
+        <Margin height="20" />
+  
+        <TextBox1>
+          <TextWrapper>{text}</TextWrapper>
+        </TextBox1>
+        <Margin height="10" />
+        <BottonWrapper>
+          {b1 && (
+            <Botton>
+              <Typo color="white">{b1}</Typo>
+            </Botton>
+          )}
+          {b2 && (
+            <Botton>
+              <Typo color="white">{b2}</Typo>
+            </Botton>
+          )}
+          {b3 && (
+            <Botton>
+              <Typo color="white">{b3}</Typo>
+            </Botton>
+          )}
+          {b4 && (
+            <Botton>
+              <Typo color="white">{b4}</Typo>
+            </Botton>
+          )}
+        </BottonWrapper>
+      </CardEach>
+    );
+  };
+  
+  export default QuizCard;
+/*const QuizCard = ({
   image,
   quiz_title,
   text,
