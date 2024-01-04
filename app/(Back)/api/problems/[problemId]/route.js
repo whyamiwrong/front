@@ -46,26 +46,7 @@ export async function GET(request, { params }) {
         return Response.json(result);
 }
 
-async function hihi(){
-    
-    const username = "whyamiwrong";
-    //const username = getVerified;
-    
-    
-    const solved = await prisma.user.update({
-        where : {
-            username : username,
-            //user_id: 1,//이 부분에 대한 처리는 어떻게 할것인가?
-        },
-        data: {
-            solved:{
-                increment:1,
-            }
-        }
-    })
-    console.log("success")
-    console.log(solved.solved)
-}
+
 /**
  * @swagger
  * /problems/{problemId}:
@@ -116,8 +97,11 @@ async function hihi(){
  *                         type: string
  */
 
-export async function POST(request, {params,body}){
+export async function POST(request, { params } ){
     const problem_id = parseInt(params.problemId);
+    const body = await request.json();
+    const code = body.code;
+
     const testcases = await prisma.testcases.findUnique({
         where:{
             problem_id: problem_id,
@@ -131,8 +115,7 @@ export async function POST(request, {params,body}){
     })
     const input = testcases.input[0];
     const check = testcases.output[0];
-    //code는 import?해와야 할 것임. 어떤 페이지에서?
-    const code = '#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "4";\n    return 0;\n}';
+
     const runCode = async () => {
         try{
             const response = await fetch('https://judge-worker.run.goorm.io/submit/check_answer',{
@@ -166,11 +149,29 @@ export async function POST(request, {params,body}){
     
     if(result.correct=="1"){
         console.log("happy")
-        await hihi()
+        await hihi();
     }
     else console.log(result.correct)
     return Response.json(result)
+}
 
+async function hihi(){
+    
+    const username = "whyamiwrong";
+    
+    
+    const solved = await prisma.user.update({
+        where : {
+            username : username,
+        },
+        data: {
+            solved:{
+                increment:1,
+            }
+        }
+    })
+    console.log("success")
+    console.log(solved.solved)
 }
 
 
@@ -180,6 +181,6 @@ export async function POST(request, {params,body}){
 //     input             String            @db.Text
 //     output            String            @db.Text
 //     original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: Restrict, map: "fk_testcases_problems")
-  
+//
 //     @@index([problem_id], map: "fk_testcases_problems")
 //   }
