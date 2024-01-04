@@ -10,7 +10,7 @@ export default function Header() {
     user = verify(cookies().get("_TOKEN").value);
   }
   
-  if (user?.id) {
+  if (user?.username) {
     return <ClientHeader auth_user={user} />;
   }
   

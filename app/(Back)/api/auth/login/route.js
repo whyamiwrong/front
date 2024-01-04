@@ -7,11 +7,11 @@ const prisma = new PrismaClient();
 export async function POST(req, res) {
   const data = await req.json();
 
-  const { user_id, password } = data;
+  const { username, password } = data;
 
   const user = await prisma.user.findFirst({
     where:{
-      username : user_id,
+      username : username,
     },
   });
 
@@ -22,17 +22,17 @@ export async function POST(req, res) {
     throw new Error("Invalid password");
   }
   else{
-  const token = sign(user_id);
+    const token = sign(user.user_id, user.username);
 
-  let _res = new Response(JSON.stringify({ user_id, token }));
-  _res.headers.set(
-    "Set-Cookie",
-    `_TOKEN=${token}; Path=/; Expires=${(
-      new Date(Date.now() + 60 * 60 * 24 * 30)
-    ).toUTCString()}; HttpOnly;`
-  );
+    let _res = new Response(JSON.stringify({ user, token }));
+    _res.headers.set(
+      "Set-Cookie",
+      `_TOKEN=${token}; Path=/; Expires=${(
+        new Date(Date.now() + 60 * 60 * 24 * 30)
+      ).toUTCString()}; HttpOnly;`
+    );
 
-  return _res;
+    return _res;
   }
 }
 

@@ -65,7 +65,7 @@ export default function Header({ auth_user = false }) {
               </>
             ) : (
               <>
-                <Button variant="outlined" onClick={handleLogout}>{auth_user?.id} 로그아웃</Button>
+                <Button variant="outlined" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
                 <Button variant="contained" sx={{boxShadow: 'none'}} href="/my_info">내 정보</Button>
               </>
             )}
