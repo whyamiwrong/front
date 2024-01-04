@@ -32,10 +32,10 @@ model bookmarks {
 }
 
 model examples {
-  examples_id Int    @id @default(autoincrement())
+  examples_id Int     @id @default(autoincrement())
   problem_id  Int
-  input       String @db.Text
-  output      String @db.Text
+  input       String? @db.Text
+  output      String  @db.Text
 
   @@index([problem_id], map: "fk_examples_problems")
 }
@@ -135,7 +135,7 @@ model solutions {
 model testcases {
   testcase_id       Int               @id @default(autoincrement())
   problem_id        Int
-  input             String            @db.Text
+  input             String?           @db.Text
   output            String            @db.Text
   original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: Restrict, map: "fk_testcases_problems")
 
