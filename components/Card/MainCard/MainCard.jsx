@@ -27,6 +27,7 @@ const CardEach = styled.div`
   border-radius: 10px;
   cursor: pointer;
   margin: 9px;
+  margin-bottom:30px; 
   box-shadow: 8px 8px 8px 5px rgba(67, 0, 209, 0.05);
   scroll-snap-align: center;
 `;

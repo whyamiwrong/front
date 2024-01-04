@@ -3,7 +3,7 @@ import styled from "styled-components";
 //import { useNavigate } from "react-router-dom";
 //import Typo from "../../assets/Typo";
 import Margin from "@/components/Margin/Margin";
-
+import Horizon from "@/components/Horizon/Horizon";
 
 
 
@@ -19,10 +19,10 @@ const CardEach = styled.div`
   background-color: white;
   align-items: center;
   box-sizing: border-box;
-  height: 270px;
-  width: 300px;
+  width: 1000px;
+  height: 700px;
   @media (max-width: 1440px) {
-    width: 300px;
+    width: 1000px;
   }
   border-radius: 10px;
   cursor: pointer;
@@ -73,12 +73,12 @@ const TextWrapper2 = styled.div`
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
   margin-top: 5px;
   margin-bottom: 5px;
-  width: 80%;
-  font-size: 1rem;
+  width: 100%;
+  font-size: 2rem;
   font-weight: 600;
 `;
 const TextBox = styled.div`
@@ -100,10 +100,13 @@ const QuizCard = ({
  // const navigate = useNavigate();
   return (
     <CardEach onClick={onClick}>
-      <Thumbnail image={image} />
+      
       <TitleWrapper>
         {title}
       </TitleWrapper>
+      <Horizon width="80%"/>
+
+      <Thumbnail image={image} />
       <TextBox>
         <TextWrapper>
           <Margin height="6" />
@@ -114,7 +117,7 @@ const QuizCard = ({
 
         <TextWrapper2>
           <Margin height="6" />
-          {num}문제
+          {num}
           <Margin height="5" />
           
         </TextWrapper2>

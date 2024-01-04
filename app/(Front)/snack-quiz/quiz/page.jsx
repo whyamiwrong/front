@@ -20,6 +20,19 @@ const TitleWrapper = styled.div`
     flex-direction: row;
     align-items: center;
 `
+const Wrapper = styled.div`
+    position: relative;
+    left: 0px;
+    top:0px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex: auto;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+`
+
 const IconWrapper = styled.div`
     position: relative;
     left: 0px;
@@ -40,8 +53,15 @@ export default function Quiz(){
             <TitleWrapper>
                 <Typo size="2rem" weight= "600"> 안녕하세요 </Typo>
             </TitleWrapper>
-                
-            <QuizCard/>
+            <Wrapper>    
+             <QuizCard
+             image={"/img/Logo/WhyWrongLogo.png"}
+             title={"입출력과 사칙연산"}
+             category={"수학"}
+             category2={"Mathmatics"}
+             num={13}
+             />
+            </Wrapper>
         </>
     )
 }
