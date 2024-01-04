@@ -27,7 +27,7 @@ const Wrapper2 = styled.div`
   margin-bottom: 10px;
   cursor: pointer;
   box-sizing: border-box;
-  padding-left: 20px;
+  padding-left: 10px;
 `;
 
 function MainTitle({ text, bottomgap, isarrow, onClick }) {
@@ -35,7 +35,7 @@ function MainTitle({ text, bottomgap, isarrow, onClick }) {
     <Wrapper>
     <Margin height="30"/>
     <Wrapper2  onClick={onClick}>
-      <Typo size="2rem" weight="700" lineheight="0.1">{text}</Typo>
+      <Typo size="1.5rem" weight="700" lineheight="0.1">{text}</Typo>
       {isarrow && (
         <MdArrowForwardIos
           style={{ fontSize: 16, marginTop: 2, marginLeft: 3 }}

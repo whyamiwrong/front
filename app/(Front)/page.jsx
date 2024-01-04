@@ -40,6 +40,8 @@ const SliderXwrapper2 = styled.div`
   overflow-x: scroll;
   min-height: 300px;
   width: 100%;
+  
+
   scroll-snap-type: x mandatory;
 `;
 const SliderXwrapper = styled.div`
