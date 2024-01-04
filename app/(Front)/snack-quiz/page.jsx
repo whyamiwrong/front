@@ -10,9 +10,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex: auto;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: row;
   align-items: center;
+
   overflow-x: hidden;
   //background-color: whitesmoke;
 `;
