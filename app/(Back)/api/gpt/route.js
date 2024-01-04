@@ -49,7 +49,7 @@ export async function POST(request) {
 
     // POST 함수 호출
 
-    const username = getVerified();
+    const {user_id, username} = getVerified();
 
     const newQuiz = await prisma.snack_quiz.create({
         data: {

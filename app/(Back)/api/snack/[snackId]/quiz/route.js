@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export async function POST(req){
 
     const session = await req.json();
-    const username = getVerified();
+    const { user_id, username } = getVerified();
 
     const newQuiz = await prisma.snack_quiz.create({
         data: {
@@ -19,7 +19,8 @@ export async function POST(req){
         },
     });
 
-    console.log(username);
+    // console.log(user_id);
+    // console.log(username);
 
     return Response.json(newQuiz);
 }
