@@ -113,8 +113,11 @@ export async function POST(request, { params } ){
         }
         
     })
-    const input = testcases.input[0];
-    const check = testcases.output[0];
+    //const input = testcases.input[0];
+    //const check = testcases.output[0];
+
+    const input = testcases.input // 각 입력값을 줄바꿈으로 연결
+    const check = testcases.output
 
     const runCode = async () => {
         try{
@@ -147,22 +150,26 @@ export async function POST(request, { params } ){
     const result = await runCode({code, input,check});
     console.log(result)
     
-    if(result.correct=="1"){
+    if(result.correct==1){
         console.log("happy")
-        await hihi();
+        await update_solved()
     }
     else console.log(result.correct)
     return Response.json(result)
 }
 
-async function hihi(){
+async function update_solved(){
     
-    const username = "whyamiwrong";
-    
-    
+    const {user_id, username} = getVerified();
+    console.log(user_id)
+    console.log(username)
+    if(!user_id||!username){
+        return
+    }
     const solved = await prisma.user.update({
         where : {
             username : username,
+            user_id:user_id
         },
         data: {
             solved:{
