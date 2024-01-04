@@ -35,9 +35,9 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-  const handleAxios = async (user_id, password) => {
+  const handleAxios = async (username, password) => {
     const res = await axios.post('/api/auth/login', {
-      user_id: user_id,
+      username: username,
       password: password
       })
       .then((response) => {
@@ -53,11 +53,11 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      id: data.get('user_id'),
+      id: data.get('username'),
       password: data.get('password'),
     });
 
-    handleAxios(data.get('user_id'), data.get('password'));
+    handleAxios(data.get('username'), data.get('password'));
   };
 
   return (
@@ -83,10 +83,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="user_id"
+              id="username"
               label="아이디"
-              name="user_id"
-              autoComplete="user_id"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
