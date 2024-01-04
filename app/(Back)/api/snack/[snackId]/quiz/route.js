@@ -1,10 +1,12 @@
 import { PrismaClient} from "@prisma/client";
+import { getVerified } from "@/lib/session";
 
 const prisma = new PrismaClient();
 
 export async function POST(req){
 
     const session = await req.json();
+    const username = getVerified();
 
     const newQuiz = await prisma.snack_quiz.create({
         data: {
@@ -12,10 +14,12 @@ export async function POST(req){
             title: session.title,
             description: session.description,
             selections: session.selections,
-            created_by: session.user_id,
+            created_by: username,
             tag: session.tag,
         },
     });
+
+    console.log(username);
 
     return Response.json(newQuiz);
 }
@@ -40,7 +44,6 @@ export async function POST(req){
  *               3: "트리는 그래프의 한 종류라고 할 수 있다."
  *               4: "트리에서 부모 노드는 여러 자식 노드를 가질 수 있고, 자식 노드는 여러 부모 노드를 가질 수 있다."
  *               answer: "3" 
- *             user_id: 1
  *             tag:
  *               1: "자료구조"
  *               2: "트리"
@@ -51,7 +54,7 @@ export async function POST(req){
  *           application/json:
  *             example:
  *               snack_quiz_id: 5
- *               snack_id: "트리의 특징"
+ *               snack_id: 3
  *               title: "트리의 특징"
  *               description: "프로그래밍 관점에서, 트리(Tree)의 특징에 대해 맞는 답을 고르세요."
  *               selections: 
@@ -60,7 +63,7 @@ export async function POST(req){
  *                 3: "트리는 그래프의 한 종류라고 할 수 있다."
  *                 4: "트리에서 부모 노드는 여러 자식 노드를 가질 수 있고, 자식 노드는 여러 부모 노드를 가질 수 있다."
  *                 answer: "3" 
- *               user_id: 1
+ *               created_by: "whyamiwrong"
  *               tag:
  *                 1: "자료구조"
  *                 2: "트리"
