@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 const HorizonEach = styled.div`
   width: ${(props) => props.width};
-  height: 2px;
+  height: 1px;
   background-color: ${(props) =>
     props.color }; // 논리 OR 연산자, props.color 값이 없는 경우 gray 나옴
 `;
