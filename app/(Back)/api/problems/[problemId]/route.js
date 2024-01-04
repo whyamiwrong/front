@@ -102,22 +102,44 @@ export async function POST(request, { params } ){
     const body = await request.json();
     const code = body.code;
 
-    const testcases = await prisma.testcases.findUnique({
-        where:{
+    // const testcases = await prisma.testcases.findUnique({
+    //     where:{
+    //         problem_id: problem_id,
+    //         testcase_id: problem_id,
+    //     },
+    //     select:{
+    //         input: true,
+    //         output: true
+    //     }
+        
+    // })
+    const testcases = await prisma.testcases.findMany({
+        where: {
             problem_id: problem_id,
-            testcase_id: problem_id,
         },
-        select:{
+        select: {
             input: true,
             output: true
         }
-        
-    })
+    });
+    console.log("bye")
+    const inputs = testcases.map(testcase => Array.isArray(testcase.input) ? testcase.input.join('\n') : testcase.input);
+    if(!inputs)
+    {
+        console.log("yaho")
+    }
+    const checks = testcases.map(testcase => Array.isArray(testcase.output) ? testcase.output.join('\n') : testcase.output);
+
+    // inputs ,outputs => 배열
+    console.log(inputs);
+    console.log(checks);
+
+
     //const input = testcases.input[0];
     //const check = testcases.output[0];
 
-    const input = testcases.input // 각 입력값을 줄바꿈으로 연결
-    const check = testcases.output
+    //const input = testcases.input // 각 입력값을 줄바꿈으로 연결
+    //const check = testcases.output
 
     const runCode = async () => {
         try{
@@ -126,7 +148,7 @@ export async function POST(request, { params } ){
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({code, input, check}),
+                body: JSON.stringify({code, inputs, checks}),
                 credentials: 'include',
             });
 
@@ -147,7 +169,7 @@ export async function POST(request, { params } ){
     
     
     
-    const result = await runCode({code, input,check});
+    const result = await runCode({code, inputs,checks});
     console.log(result)
     
     if(result.correct==1){
