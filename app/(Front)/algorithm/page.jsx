@@ -58,9 +58,7 @@ export default function Algorithm() {
           <SliderXItems>
          
               <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               //image={"/logo_512x512.png"}
-//               image={"/img/Logo/WhyWrongLogo2.png"}
+
                image={"/img/Logo/WhyWrongLogo.png"}
 
                title={"입출력과 사칙연산"}
@@ -92,14 +90,7 @@ export default function Algorithm() {
                category2={"Mathmatics"}
                num={13}
              />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
+             
           </SliderXItems>
           </SliderXwrapper2>
           <Margin height="10" />
@@ -142,14 +133,7 @@ export default function Algorithm() {
                category2={"Mathmatics"}
                num={13}
              />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
+             
           </SliderXItems>
           </SliderXwrapper2>
           <Margin height="10" />
@@ -192,14 +176,7 @@ export default function Algorithm() {
                category2={"Mathmatics"}
                num={13}
              />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
+             
           </SliderXItems>
           </SliderXwrapper2>
           <Margin height="10" />
@@ -242,14 +219,7 @@ export default function Algorithm() {
                category2={"Mathmatics"}
                num={13}
              />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
+             
           </SliderXItems>
           </SliderXwrapper2>
 
