@@ -115,7 +115,7 @@ const MainCard = ({
 
         <TextWrapper2>
           <Margin height="6" />
-          {num}문제
+          {num}
           <Margin height="5" />
           
         </TextWrapper2>

@@ -1,11 +1,12 @@
-
 "use client";
+
 import * as React from "react";
 import styled from "styled-components";
 import MainTitle from "@/components/MainTitle/MainTitle";
 import MainCard from "@/components/Card/MainCard/MainCard";
 import Margin from "@/components/Margin/Margin";
-import { RecoilRoot } from "recoil";
+import Link from "next/link";
+import axios from "axios";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -16,8 +17,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   overflow-x: hidden;
-
-  //background-color: whitesmoke;
+  text-decoration: none;
 `;
 const SliderXwrapper2 = styled.div`
   position: relative;
@@ -47,187 +47,41 @@ const SliderXItems = styled.div`
 `;
 
 export default function Algorithm() {
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [problems, setProblems] = React.useState([]);
 
-   return (
-    
-    <RecoilRoot>
+  React.useEffect(() => {
+    const getProblems = async () => {
+      const res = await axios.get(`/api/problems`);
+      setIsLoading(false);
+      setProblems(res.data);
+      console.log(res.data);
+      if (res.status !== 200) {
+        setLoadError(true);
+      }
+    };
 
-        <Margin height="10" />
-        <MainTitle text="A 알고리즘 >" />
-        <SliderXwrapper2>
-          <SliderXItems>
-         
+    getProblems();
+  }, []);
+
+  return !isLoading ? (
+    <>
+      <Margin height="10" />
+      {/* <MainTitle text="A 알고리즘 >" /> */}
+        <Wrapper>
+          {problems.map((problem, idx) => (
+            <Link key={idx} href={`/algorithm/${problem.problem_id}`} style={{textDecoration: "none"}}>
               <MainCard
-
-               image={"/img/Logo/WhyWrongLogo.png"}
-
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             
-          </SliderXItems>
-          </SliderXwrapper2>
-          <Margin height="10" />
-        <MainTitle text="B 알고리즘 >" />
-        <SliderXwrapper2>
-          <SliderXItems>
-         
-              <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               //image={"/logo_512x512.png"}
-//               image={"/img/Logo/WhyWrongLogo2.png"}
-               image={"/img/Logo/WhyWrongLogo.png"}
-
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             
-          </SliderXItems>
-          </SliderXwrapper2>
-          <Margin height="10" />
-        <MainTitle text="C 알고리즘 >" />
-        <SliderXwrapper2>
-          <SliderXItems>
-         
-              <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               //image={"/logo_512x512.png"}
-//               image={"/img/Logo/WhyWrongLogo2.png"}
-               image={"/img/Logo/WhyWrongLogo.png"}
-
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             
-          </SliderXItems>
-          </SliderXwrapper2>
-          <Margin height="10" />
-        <MainTitle text="D 알고리즘 >" />
-        <SliderXwrapper2>
-          <SliderXItems>
-         
-              <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               //image={"/logo_512x512.png"}
-//               image={"/img/Logo/WhyWrongLogo2.png"}
-               image={"/img/Logo/WhyWrongLogo.png"}
-
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             
-          </SliderXItems>
-          </SliderXwrapper2>
-
-
-          
-    </RecoilRoot>
-
-
-    
-   )
+                image={`https://source.unsplash.com/random?${idx}`}
+                title={problem.problems?.title}
+                category={problem.problems?.algorithm_category}
+              />
+            </Link>
+          ))
+          }
+        </Wrapper>
+    </>
+  ) : (
+    <div></div>
+  );
 }

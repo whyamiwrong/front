@@ -126,7 +126,7 @@ export default function Algorithm({ params }) {
         <span className="basic-gray">{`#${params.prob_id}`}</span> {problem_data.problems.title}
       </Typography>
       <Grid container spacing={2} rowSpacing={4}>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "24px" }}>
             <Box>
               <Typography variant="h6">문제</Typography>
@@ -149,16 +149,6 @@ export default function Algorithm({ params }) {
                 {problem_data.problems.memory_limit}mb
               </Typography>
             </Box>
-            {/* <Box>
-              <Typography variant="h6">입력</Typography>
-              <Divider />
-              <Typography variant="body2">{problem_data.input}</Typography>
-            </Box>
-            <Box>
-              <Typography variant="h6">출력</Typography>
-              <Divider />
-              <Typography variant="body2">{problem_data.output}</Typography>
-            </Box> */}
             <Box>
               <Typography variant="h6">예제 입출력</Typography>
               <Divider />
@@ -167,12 +157,20 @@ export default function Algorithm({ params }) {
                   <Typography variant="body2">
                     <strong>입력</strong>
                   </Typography>
-                  <Typography variant="body2">{io?.input}</Typography>
+                  <Typography variant="body2">{
+                  io?.input.split('\\n').map((line, index) => (
+                    <span key={index}>{line}<br /></span>
+                  ))
+                  }</Typography>
 
                   <Typography variant="body2">
                     <strong>출력</strong>
                   </Typography>
-                  <Typography variant="body2">{io?.output}</Typography>
+                  <Typography variant="body2">{
+                  io?.output.split('\\n').map((line, index) => (
+                    <span key={index}>{line}<br /></span>
+                  ))
+                  }</Typography>
                 </Box>
               ))}
             </Box>
@@ -208,8 +206,8 @@ export default function Algorithm({ params }) {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={6}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <Grid item xs={12} sm={6}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', maxHeight: "100vh" }}>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel id="demo-select-small-label">언어</InputLabel>
               <Select
