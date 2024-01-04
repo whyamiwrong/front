@@ -54,12 +54,33 @@ export async function POST(req, { params }){
 
     return Response.json({ ans_count, tot_count});
     }catch (error) {
-        console.error('Error:', error);
-        
-        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const snack_id = params.snack_id;
+
+        const data = await req.json();
+    
+        const keys = Object.keys(data);
+    
+        const tot_count = keys.length;
+    
+        let ans_count = 0;
+    
+        for(var i = 0; i < tot_count; i++){
+            var key = keys[i];
+    
+            const snack_quiz = await prisma.snack_quiz.findFirst({
+                where: {
+                    snack_quiz_id: parseInt(key),
+                },
+            });    
+            
+            const obj = snack_quiz.selections;
+
+            if(obj.answer == data[key]){
+                ans_count++;
+            };
+        }
+    
+        return Response.json({ ans_count, tot_count});
     }
 }
 
