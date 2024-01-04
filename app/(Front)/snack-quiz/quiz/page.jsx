@@ -6,6 +6,7 @@ import MainCard from "@/components/Card/MainCard/MainCard";
 import Margin from "@/components/Margin/Margin";
 import QuizCard from "@/components/Card/QuizCard/QuizCard";
 import Typo from "@/components/Typo/Typo";
+import Link from "next/link";
 
 const TitleWrapper = styled.div`
     position: relative;
@@ -127,8 +128,9 @@ export default function Quiz(){
              b4={"트리에서 부모 노드는 여러 자식 노드를 가질 수 있고, 자식 노드는 여러 부모 노드를 가질 수 있다."}
              />
              
-             
-             <ResultBottom/>
+             <Link href="/snack-quiz/quiz/result" style={{textDecoration:"none"}}>
+              <ResultBottom/>
+            </Link>
             </Wrapper>
             <Margin height="20"/>
 

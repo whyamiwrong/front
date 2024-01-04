@@ -6,7 +6,7 @@ import Margin from "../../Margin/Margin"
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 36vh;
+  height: 45vh;
   position: relative;
   box-sizing: border-box;
 `;

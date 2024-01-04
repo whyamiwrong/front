@@ -9,29 +9,154 @@ import Typo from "@/components/Typo/Typo";
 
 const Background = styled.div`
   display: flex;
-  flex-direction: row;
+  flex: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute; //내부 div들도 absolute로 두고 z-index 우선순위
   top: 0px;
   left:0px;
-
   background-image: url("/img/Result/result1.svg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-color: none;
+  background-color: #F7EDFD;
   border-radius: 10px;
-
-
   height: 100vh;
   width: 100vw;
 `;
+const BottomWrapper1 = styled.div`
+    position: absolute;
+    top: 85px;
+    left: 96%;
+    // display:flex;
+    //flex: wrap;
+    //flex-direction: row;
+    width: 100vw;
+    //justify-content: flex-end;
+    //align-items: flex-end;
+`
+const BottomWrapper2 = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
+    
+    // display:flex;
+    //flex: wrap;
+    //flex-direction: row;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+`
+const BottomWrapper3 = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: row;
+
+    
+    // display:flex;
+    //flex: wrap;
+    //flex-direction: row;
+    //width: 100vw;
+    justify-content: center;
+    align-items: center;
+`
+const CloseBottom = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/img/Result/close.svg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: none;
+    //border-radius: 10px;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+`;
+
+const QuizResult = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/img/Result/QuizResult.svg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: none;
+    //border-radius: 10px;
+    cursor: pointer;
+    height: 150px;
+    width: 285px;
+`;
+const Time = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/img/Result/Time.svg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: none;
+    //border-radius: 10px;
+    cursor: pointer;
+    height: 182px;
+    width: 410px;
+`;
+const Score = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/img/Result/Score.svg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: none;
+    //border-radius: 10px;
+    cursor: pointer;
+    height: 182px;
+    width: 410px;
+`;
+const RetryButton = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/img/Result/RetryButton.svg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: none;
+    //border-radius: 10px;
+    cursor: pointer;
+    height: 76px;
+    width: 200px;
+`;
 export default function Quiz(){
     return(
         <Background>
-            <Typo>안녕하세요</Typo>
+            <BottomWrapper1>
+                <CloseBottom/>
+            </BottomWrapper1>
+            <Margin height="50"/>
+            <BottomWrapper2>
+                <QuizResult/>
+                <Margin height="50"/>
+                <BottomWrapper3>
+                    <Time/>  
+                    <Margin width="30"/>
+                    <Score/>
+                </BottomWrapper3>
+                <Margin height="80"/>
+                <RetryButton/>
+            </BottomWrapper2>
+
         </Background>
 
     )
