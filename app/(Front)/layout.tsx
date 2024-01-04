@@ -10,14 +10,7 @@ import Menu from "components/shared/menu";
 import Wrapper from "@/components/shared/wrapper";
 import { RecoilRoot } from 'recoil';
 
-import hljs from 'highlight.js';
-import javascript from 'highlight.js/lib/languages/javascript'; 
-import css from 'highlight.js/lib/languages/css'; 
-import html from 'highlight.js/lib/languages/xml'; 
 
-hljs.registerLanguage('javascript', javascript); 
-hljs.registerLanguage('css', css); 
-hljs.registerLanguage('html', html);
 
 
 

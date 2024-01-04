@@ -3,6 +3,8 @@ import Typo from "../Typo/Typo";
 import { MdArrowForwardIos } from "react-icons/md";
 import Horizon from "../Horizon/Horizon";
 import Margin from "../Margin/Margin";
+import Link from 'next/link'
+
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,6 +20,7 @@ const Wrapper = styled.div`
   position: relative;
   bottom: -60px;
 
+
 `;
 const Wrapper2 = styled.div`
   width: 100%;
@@ -31,18 +34,21 @@ const Wrapper2 = styled.div`
 `;
 
 function MainTitle({ text, bottomgap, isarrow, onClick }) {
+
   return (
     <Wrapper>
     <Margin height="30"/>
-    <Wrapper2  onClick={onClick}>
-      <Typo size="1.5rem" weight="700" lineheight="0.1">{text}</Typo>
-      {isarrow && (
-        <MdArrowForwardIos
-          style={{ fontSize: 16, marginTop: 2, marginLeft: 3 }}
-        />
-      )}
-      
-    </Wrapper2> 
+    
+      <Wrapper2  onClick={onClick}>
+        <Typo size="1.5rem" weight="700" lineheight="0.1">{text}</Typo>
+        {isarrow && (
+          <MdArrowForwardIos
+            style={{ fontSize: 16, marginTop: 2, marginLeft: 3 }}
+          />
+        )}
+        
+      </Wrapper2> 
+  
      <Horizon width={"100%"} color={"darkgray"}/>
      <Margin height="60"/>
      </Wrapper>

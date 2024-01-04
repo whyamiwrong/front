@@ -21,6 +21,7 @@ import Horizon from "../../components/Horizon/Horizon";
 import MainTitle from "../../components/MainTitle/MainTitle";
 import Typo from "@/components/Typo/Typo";
 import CodeReviewCard from "../../components/Card/CodeReviewCard/CodeReviewCard"
+import Link from "next/link";
 
 
 //import Header from "../../components/Header/Header"; 라우팅 이해필요..
@@ -38,6 +39,7 @@ const Wrapper = styled.div`
 const SliderXwrapper2 = styled.div`
   position: relative;
   overflow-x: scroll;
+  overFlow-y: hidden;
   min-height: 300px;
   width: 100%;
   
@@ -57,6 +59,7 @@ const SliderXItems = styled.div`
   left: 0;
   top: 0;
   display: flex;
+  
   /* display: grid;
   grid-template-columns: repeat(${(props) => props.cards}, 1fr);
   gap: 20px; */
@@ -67,7 +70,9 @@ export default function HomePage() {
 <RecoilRoot>
         <AdSlider />
         <Margin height="10" />
-        <MainTitle text="인기있는 알고리즘 풀러 가볼까요? >" />
+        <Link href="/algorithm1" style={{textDecoration:"none"}}>
+          <MainTitle text="인기있는 알고리즘 풀러 가볼까요? >" />
+        </Link>
         <SliderXwrapper2>
           <SliderXItems>
          
@@ -117,8 +122,9 @@ export default function HomePage() {
           </SliderXItems>
           </SliderXwrapper2>
 
-
+          <Link href="/snack-quiz" style={{textDecoration:"none"}}>
           <MainTitle text="Snack Quiz? >" />
+          </Link>
           <SliderXwrapper2>
           <SliderXItems>
          
