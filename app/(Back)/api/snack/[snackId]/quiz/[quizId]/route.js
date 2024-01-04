@@ -1,6 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export async function GET(req, { params }) {
     const snack_id = params.snackId;
