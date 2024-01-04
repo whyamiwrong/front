@@ -169,7 +169,7 @@ model snack_quiz {
   title         String?     @db.VarChar(100)
   description   String?     @db.Text
   selections    Json?
-  created_by    Int?
+  created_by    String?     @db.VarChar(50)
   tag           Json?
   snack         snack       @relation(fields: [snack_id], references: [snack_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_snack_quiz_snack")
   solutions     solutions[]
