@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { getVerified } from "@/lib/session";
 //import {code} from "../../../../(Front)/algorithm/[prob_id]/page"
-const prisma = new PrismaClient();
+
 
 //original problems, problems에서는 
 export async function GET(request, { params }) {

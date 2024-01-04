@@ -1,9 +1,8 @@
 import OpenAI from 'openai';
 //const dotenv = require('dotenv');
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { getVerified } from "@/lib/session";
 let extractedData = ''; 
-const prisma = new PrismaClient();
 
 export async function POST(request) {
   try{
