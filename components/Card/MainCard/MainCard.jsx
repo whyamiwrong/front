@@ -45,7 +45,7 @@ const Thumbnail = styled.div`
   border-radius: 10px;
 
 
-  height: 200px;
+  height: 174px;
   width: 100%;
 `;
 
