@@ -1,4 +1,8 @@
+import { getVerified } from "@/lib/session"
+
 export async function GET(_request: Request) {
+  
+  getVerified();
   // Do whatever you want
   return new Response("Hello World!", {
     status: 200,
