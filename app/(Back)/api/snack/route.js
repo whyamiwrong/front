@@ -1,5 +1,4 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-
 const prisma = new PrismaClient();
 
 export async function GET(req) {
@@ -7,6 +6,17 @@ export async function GET(req) {
     const snacks = await prisma.snack.findMany()
 
     return Response.json(snacks);
+}
+
+export async function POST(req){
+
+    const title = await req.json();
+
+    const newSnack = await prisma.snack.create({
+        data: title,
+    });
+
+    return Response.json(newSnack);
 }
 
 /**
@@ -27,4 +37,22 @@ export async function GET(req) {
  *               - snack_id: 2
  *                 title: "연결 리스트"
  *                 views: 0
+*   post:
+ *     summary: 새로운 스낵 문제를 생성합니다.
+ *     tags: [Snack]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           example:
+ *             title: "트리"
+ *     responses:
+ *       201:
+ *         description: 새로운 스낵 문제가 성공적으로 생성됩니다.
+ *         content:
+ *           application/json:
+ *             example:
+ *               snack_id: 3
+ *               title: "트리"
+ *               views: 0
  */
