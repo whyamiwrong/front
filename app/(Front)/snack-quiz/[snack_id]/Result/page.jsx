@@ -6,6 +6,12 @@ import MainCard from "@/components/Card/MainCard/MainCard";
 import Margin from "@/components/Margin/Margin";
 import Typo from "@/components/Typo/Typo";
 
+import {
+    Grid, Typography
+} from "@mui/material";
+
+import { useSearchParams } from "next/navigation";
+
 
 const Background = styled.div`
   display: flex;
@@ -105,8 +111,9 @@ const Time = styled.div`
     background-color: none;
     //border-radius: 10px;
     cursor: pointer;
-    height: 182px;
-    width: 410px;
+    // height: 182px;
+    min-width: 200px;
+    max-width: 410px;
 `;
 const Score = styled.div`
     display: flex;
@@ -120,8 +127,9 @@ const Score = styled.div`
     background-color: none;
     //border-radius: 10px;
     cursor: pointer;
-    height: 182px;
-    width: 410px;
+    // height: 182px;
+    min-width: 200px;
+    max-width: 410px;
 `;
 const RetryButton = styled.div`
     display: flex;
@@ -138,26 +146,43 @@ const RetryButton = styled.div`
     height: 76px;
     width: 200px;
 `;
-export default function Quiz(){
+export default function Quiz({ params }) {
+    const searchParams = useSearchParams();
+    const duration = searchParams.get("duration");
+    const solved = searchParams.get("solved");
+    const total = searchParams.get("total");
+
+
     return(
         <Background>
             <BottomWrapper1>
-                <CloseBottom/>
+                <CloseBottom onClick={() => {window.location.href = "/snack-quiz"}} />
             </BottomWrapper1>
             <Margin height="50"/>
             <BottomWrapper2>
                 <QuizResult/>
                 <Margin height="50"/>
-                <BottomWrapper3>
-                    <Time/>  
-                    <Margin width="30"/>
-                    <Score/>
-                </BottomWrapper3>
+                <Typography variant="h4" align="center">
+                    푸는데 걸린 시간<br/>
+                    <strong>{duration} 초</strong>
+                </Typography>
+                <Margin height="20"/>
+                <Typography variant="h4" align="center">
+                    점수<br/>
+                    <strong>{Math.round(solved / total * 100)}점({solved} / {total})</strong>
+                </Typography>
+                <Grid container spacing={2} rowSpacing={4}>
+                    <Grid item xs={12} sm={6}>
+                        <Time/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Score/>
+                    </Grid>
+                </Grid>
                 <Margin height="80"/>
-                <RetryButton/>
+                <RetryButton onClick={() => {window.history.back()}} />
             </BottomWrapper2>
 
         </Background>
-
     )
 }

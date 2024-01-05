@@ -95,14 +95,14 @@ export default function Header({ auth_user = false }) {
               <Stack direction="row" spacing={2}>
                 {windowWidth > 790 && (
                   <>
-                    <Button href="/algorithm">
+                    <Button href="/algorithm" color="secondary">
                       Algorithm
                     </Button>
-                    <Button href="/snack-quiz">
+                    <Button href="/snack-quiz" color="secondary">
                       Snack Quiz
                     </Button>
-                   
-                    <Button href="/ranking">
+                    
+                    <Button href="/ranking" color="secondary">
                       Ranking
                     </Button>
                   </>
@@ -110,13 +110,13 @@ export default function Header({ auth_user = false }) {
                 <Box sx={{ display: 'flex', gap: '8px' }}>
                   {!auth_user ? (
                     <>
-                      <Button variant="outlined" href="/login">로그인</Button>
-                      <Button variant="contained" sx={{boxShadow: 'none'}}>회원가입</Button>
+                      <Button variant="outlined" color="secondary" href="/login">로그인</Button>
+                      <Button variant="contained" color="secondary" href="/signup" sx={{boxShadow: 'none'}}>회원가입</Button>
                     </>
                   ) : (
                     <>
-                      <Button variant="outlined" onClick={handleLogout}>{auth_user?.id} 로그아웃</Button>
-                      <Button variant="contained" sx={{boxShadow: 'none'}} href="/my_info">내 정보</Button>
+                      <Button variant="outlined" color="secondary" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
+                      <Button variant="contained" color="secondary" sx={{boxShadow: 'none'}} href="/">내 정보</Button>
                     </>
                   )}
                 </Box>
@@ -125,27 +125,27 @@ export default function Header({ auth_user = false }) {
               <Box sx={{ display: 'flex', gap: '8px' }}>
                 {windowWidth > 790 && (
                   <>
-                    <Button href="/algorithm">
+                    <Button href="/algorithm" color="secondary">
                       Algorithm
                     </Button>
-                    <Button href="/snack-quiz">
+                    <Button href="/snack-quiz" color="secondary">
                       Snack Quiz
                     </Button>
                     
-                    <Button href="/ranking">
+                    <Button href="/ranking" color="secondary">
                       Ranking
                     </Button>
                   </>
                 )}
                 {!auth_user ? (
                   <>
-                    <Button variant="outlined" href="/login">로그인</Button>
-                    <Button variant="contained" sx={{boxShadow: 'none'}}>회원가입</Button>
+                    <Button variant="outlined" color="secondary" href="/login">로그인</Button>
+                    <Button variant="contained" color="secondary" href="/signup" sx={{boxShadow: 'none'}}>회원가입</Button>
                   </>
                 ) : (
                   <>
-                    <Button variant="outlined" onClick={handleLogout}>{auth_user?.id} 로그아웃</Button>
-                    <Button variant="contained" sx={{boxShadow: 'none'}} href="/my_info">내 정보</Button>
+                    <Button variant="outlined" color="secondary" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
+                    <Button variant="contained" color="secondary" sx={{boxShadow: 'none'}} href="/">내 정보</Button>
                   </>
                 )}
               </Box>
@@ -163,28 +163,29 @@ export default function Header({ auth_user = false }) {
           onKeyDown={toggleDrawer(false)}
         >
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px', p: '16px' }}>
-            <Button href="/">
+            <br/><br/>
+            <Button href="/" color="secondary">
               WhyamiWrong
             </Button>
-            <Button href="/algorithm">
+            <Button href="/algorithm" color="secondary">
               Algorithm
             </Button>
-            <Button href="/snack-quiz">
+            <Button href="/snack-quiz" color="secondary">
               Snack Quiz
             </Button>
             
-            <Button href="/ranking">
+            <Button href="/ranking" color="secondary">
               Ranking
             </Button>
             {!auth_user ? (
               <>
-                <Button href="/login">로그인</Button>
-                <Button sx={{boxShadow: 'none'}}>회원가입</Button>
+                <Button href="/login" color="secondary">로그인</Button>
+                <Button href="/signup" color="secondary" sx={{boxShadow: 'none'}}>회원가입</Button>
               </>
             ) : (
               <>
-                <Button onClick={handleLogout}>{auth_user?.id} 로그아웃</Button>
-                <Button sx={{boxShadow: 'none'}} href="/my_info">내 정보</Button>
+                <Button color="secondary" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
+                <Button color="secondary" sx={{boxShadow: 'none'}} href="/">내 정보</Button>
               </>
             )}
           </Box>

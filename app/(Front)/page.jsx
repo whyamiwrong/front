@@ -70,19 +70,20 @@ const SliderXItems = styled.div`
 export default function HomePage() {
         const [isLoading, setIsLoading] = React.useState(true);
         const [problems, setProblems] = React.useState([]);
+        const [snacks, setSnacks] = React.useState([]);
 
         React.useEffect(() => {
-          const getProblems = async () => {
+          const getSnack = async () => {
             const res = await axios.get(`/api/snack`);
             setIsLoading(false);
-            setProblems(res.data);
+            setSnacks(res.data);
             console.log(res.data);
             if (res.status !== 200) {
               setLoadError(true);
             }
           };
-      
-          getProblems();
+          
+          getSnack();
         }, []);
 
         React.useEffect(() => {
@@ -127,8 +128,8 @@ export default function HomePage() {
           </Link>
           <SliderXwrapper2>
           <SliderXItems>
-         
-               {problems.map((item, idx) => (
+          
+                {snacks.map((item, idx) => (
                   <Link key={idx} href={`/snack-quiz/${item.snack_id}?title=${item.title}`} style={{textDecoration: "none"}}>
                     <MainQuizCard
                       image={`https://source.unsplash.com/random?${idx}`}

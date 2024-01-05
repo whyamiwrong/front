@@ -21,11 +21,11 @@ const CardEach = styled.div`
   background-color: #FCF7FF;
   align-items: center;
   box-sizing: border-box;
-  width: 85%;
+  width: 100%;
 
   //height: 700px;
   @media (max-width: 1020px) {
-    width: 85%;
+    width: 100%;
   }
   border-radius: 10px;
   //cursor: pointer;
@@ -139,7 +139,7 @@ const Botton = styled.div`
     align-items: start;
     box-sizing: border-box;
     flex: wrap;
-    width: 97%;
+    width: 90%;
     border-radius: 5px;
     cursor: pointer;
     margin: 9px;

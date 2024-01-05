@@ -36,9 +36,11 @@ const theme = createTheme();
 export default function SignIn() {
 
   const handleAxios = async (username, password) => {
-    const res = await axios.post('/api/auth/login', {
+    const res = await axios.post('/api/auth/signup', {
       username: username,
-      password: password
+      password: password,
+      phone_number: "010-1234-5678",
+      email: "abc@abc.abc"
       })
       .then((response) => {
         console.log(response);
@@ -76,7 +78,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            로그인
+            회원가입
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -109,11 +111,11 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              로그인하기
+              회원가입과 동시에 로그인하기
             </Button>
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-              <Link href="/signup" variant="body2">
-                {"회원가입하기"}
+              <Link href="/login" variant="body2">
+                {"로그인하기"}
               </Link>
               <Link href="/" variant="body2">
                 {"메인으로"}

@@ -21,8 +21,9 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
         bgcolor: "background.default",
         // ml: `${DRAWER_WIDTH}px`,
         mt: ["48px", "56px", "64px"],
-        mx: ["48px", "56px", "64px"],
-        p: 3,
+        mx: ["16px", "36px", "48px"],
+        pt: 3,
+        px: "8px",
       }}
     >
       {children}

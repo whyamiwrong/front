@@ -2,3 +2,12 @@
 .basic-gray {
   color: #8b8b8b !important;
 }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.blinking {
+  animation: blink 2s linear infinite;
+}
