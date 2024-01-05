@@ -13,38 +13,13 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex: auto;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: row;
   align-items: center;
   overflow-x: hidden;
   text-decoration: none;
 `;
-const SliderXwrapper2 = styled.div`
-  position: relative;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  min-height: 300px;
-  width: 100%;
-  scroll-snap-type: x mandatory;
-`;
-const SliderXwrapper = styled.div`
-  position: relative;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  min-height: 360px;
-  width: 100%;
-  scroll-snap-type: x mandatory;
-`;
 
-const SliderXItems = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
-  /* display: grid;
-  grid-template-columns: repeat(${(props) => props.cards}, 1fr);
-  gap: 20px; */
-`;
 
 export default function Algorithm() {
   const [isLoading, setIsLoading] = React.useState(true);

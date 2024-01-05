@@ -10,35 +10,65 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-const Wrapper1 = styled.div`
+
+const Wrapper = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  flex: auto;
-  justify-content: center;
   flex-direction: row;
   align-items: center;
-  overflow-x: hidden;
-  position: relative;
-
-  //background-color: whitesmoke;
-`;
-
-const Wrapper2 = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  flex: auto;
   justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  overflow-x: hidden;
-  position: relative;
-
-  //background-color: whitesmoke;
+ // margin: 0 auto;
+  //overflow-x: hidden;
+  //text-decoration: none;
 `;
+
+
 
 export default function Snack() {
+        const [isLoading, setIsLoading] = React.useState(true);
+        const [problems, setProblems] = React.useState([]);
+      
+        React.useEffect(() => {
+          const getProblems = async () => {
+            const res = await axios.get(`/api/snack`);
+            setIsLoading(false);
+            setProblems(res.data);
+            console.log(res.data);
+            if (res.status !== 200) {
+              setLoadError(true);
+            }
+          };
+      
+          getProblems();
+        }, []);
+      
+        return !isLoading ? (
+          <>
+            <Margin height="10" />
+            {/* <MainTitle text="A 알고리즘 >" /> */}
+
+              <Wrapper>
+                {problems.map((item, idx) => (
+                  <Link key={idx} href={`/snack-quiz/${item.snack_id}?title=${item.title}`} style={{textDecoration: "none"}}>
+                    <MainQuizCard
+                      image={`https://source.unsplash.com/random?${idx}`}
+                      title={item.title}
+                      view={item.views}
+                    />
+                  </Link>
+                ))
+                }
+              </Wrapper>
+            
+                   
+          </>
+        ) : (
+          <div></div>
+        );
+      }
+/*export default function Snack() {
         const [snackData, setSnackData] = useState([]);
       
         useEffect(() => {
@@ -60,7 +90,7 @@ export default function Snack() {
             <MainTitle text="SNACK QUIZ" />
             <Wrapper1>
               {snackData.map((item) => (
-                <Link href={`/snack-quiz/${item.snack_id}?title=${item.title}`} key={item.snack_id} style={{ textDecoration: 'none' , textDecorationColor: 'none'}}>
+                <Link href={`/snack-quiz/${item.snack_id}?title=${item.title}`} key={item.snack_id} style={{ textDecoration: 'none' }}>
                   <MainQuizCard
                     image={`https://source.unsplash.com/random?${item.snack_id}`}
                     title={item.title}
