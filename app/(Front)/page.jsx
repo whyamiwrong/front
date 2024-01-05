@@ -22,6 +22,8 @@ import MainTitle from "../../components/MainTitle/MainTitle";
 import Typo from "@/components/Typo/Typo";
 import CodeReviewCard from "../../components/Card/CodeReviewCard/CodeReviewCard"
 import Link from "next/link";
+import MainQuizCard from "@/components/Card/MainQuizCard/MainQuizCard"
+import axios from "axios";
 
 
 //import Header from "../../components/Header/Header"; 라우팅 이해필요..
@@ -66,7 +68,39 @@ const SliderXItems = styled.div`
 `;
 
 export default function HomePage() {
-  return (
+        const [isLoading, setIsLoading] = React.useState(true);
+        const [problems, setProblems] = React.useState([]);
+
+        React.useEffect(() => {
+          const getProblems = async () => {
+            const res = await axios.get(`/api/snack`);
+            setIsLoading(false);
+            setProblems(res.data);
+            console.log(res.data);
+            if (res.status !== 200) {
+              setLoadError(true);
+            }
+          };
+      
+          getProblems();
+        }, []);
+
+        React.useEffect(() => {
+          const getProblems = async () => {
+            const res = await axios.get(`/api/problems`);
+            setIsLoading(false);
+            setProblems(res.data);
+            console.log(res.data);
+            if (res.status !== 200) {
+              setLoadError(true);
+            }
+          };
+      
+          getProblems();
+        }, []);
+
+
+  return !isLoading ?(
 <RecoilRoot>
         <AdSlider />
         <Margin height="10" />
@@ -75,50 +109,16 @@ export default function HomePage() {
         </Link>
         <SliderXwrapper2>
           <SliderXItems>
-         
+          {problems.map((problem, idx) => (
+            <Link key={idx} href={`/algorithm/${problem.problem_id}`} style={{textDecoration: "none"}}>
               <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               //image={"/logo_512x512.png"}
-//               image={"/img/Logo/WhyWrongLogo2.png"}
-               image={"/img/Logo/WhyWrongLogo.png"}
-
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
+                image={`https://source.unsplash.com/random?${idx}`}
+                title={problem.problems?.title}
+                category={problem.problems?.algorithm_category}
+              />
+            </Link>
+          ))
+          }
           </SliderXItems>
           </SliderXwrapper2>
 
@@ -128,150 +128,23 @@ export default function HomePage() {
           <SliderXwrapper2>
           <SliderXItems>
          
-              <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
-             <MainCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"입출력과 사칙연산"}
-               category={"수학"}
-               category2={"Mathmatics"}
-               num={13}
-             />
+               {problems.map((item, idx) => (
+                  <Link key={idx} href={`/snack-quiz/${item.snack_id}?title=${item.title}`} style={{textDecoration: "none"}}>
+                    <MainQuizCard
+                      image={`https://source.unsplash.com/random?${idx}`}
+                      title={item.title}
+                      view={item.views}
+                    />
+                  </Link>
+                ))
+              }
           </SliderXItems>
           </SliderXwrapper2>
 
-          <MainTitle text="My CodeReviews >" />
-          <SliderXwrapper>
-          <SliderXItems>
-         
-              <CodeReviewCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
-               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
-               //category={"수학"}
-               //category2={"Mathmatics"}
-               //num={13}
-             />
-             <CodeReviewCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
-               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
-               //category={"수학"}
-               //category2={"Mathmatics"}
-               //num={13}
-             />
-             <CodeReviewCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
-               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
-               //category={"수학"}
-               //category2={"Mathmatics"}
-               //num={13}
-             />
-             <CodeReviewCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
-               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
-               //category={"수학"}
-               //category2={"Mathmatics"}
-               //num={13}
-             />
-             <CodeReviewCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
-               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
-               //category={"수학"}
-               //category2={"Mathmatics"}
-               //num={13}
-             />
-             <CodeReviewCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
-               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
-               //category={"수학"}
-               //category2={"Mathmatics"}
-               //num={13}
-             />
-             <CodeReviewCard
-              // onClick={() => navigate(`/popupInfo/?id=${item.id}`)}
-               image={"https://source.unsplash.com/random"}
-               title={"10살 꼬마 개발자, 판교 스타트업 대표되다"}
-               main={"7살에 프로그래밍을 접했다. 그리고 2022년, 25살에 스타트업 대표가 되었다."}
-               //category={"수학"}
-               //category2={"Mathmatics"}
-               //num={13}
-             /> 
-          </SliderXItems>
-          </SliderXwrapper>
-
-      <Margin height="100" />
-        
-      <Box sx={{ display: "flex" }}>
-      
-
-      <div>
-        
-        <Grid container rowSpacing={3} columnSpacing={3}>
           
-          <Grid xs={6}>
-            <MediaCard
-              heading="HSL and HSV"
-              text="HSL (for hue, saturation, lightness) and HSV (for hue, saturation, value; also known as HSB, for hue, saturation, brightness) are alternative representations of the RGB color model, designed in the 1970s by computer graphics researchers."
-            />
-          </Grid>
-          <Grid xs={6}>
-            <MediaCard
-              heading="RGB"
-              text="An RGB color space is any additive color space based on the RGB color model. RGB color spaces are commonly found describing the input signal to display devices such as television screens and computer monitors."
-            />
-          </Grid>
-          <Grid xs={6}>
-            <MediaCard
-              heading="CIELAB"
-              text="The CIELAB color space, also referred to as L*a*b*, was intended as a perceptually uniform space, where a given numerical change corresponds to a similar perceived change in color."
-            />
-          </Grid>
-        </Grid>
-      </div>
-    </Box>
     </RecoilRoot>
+    ) : (
+      <div></div>
   );
 }
 
