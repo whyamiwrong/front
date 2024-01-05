@@ -51,25 +51,14 @@ const Thumbnail = styled.div`
 
 const TextWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: left;
+  flex-direction: row;
+  justify-content: flex-start;
   margin-bottom: 15px;
   //margin-left: 15px;
-  margin-right: 15px;
+  //margin-right: 15px;
   line-height: 18px;
-  width: 100%;
+  width: 80%;
   color:gray;
-`;
-const TextWrapper2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: right;
-  margin-bottom: 15px;
-  margin-left: 30px;
-  margin-right: 15px;
-  line-height: 18px;
-  color:gray;
-
 `;
 const TitleWrapper = styled.div`
   display: flex;
@@ -82,20 +71,11 @@ const TitleWrapper = styled.div`
   font-size: 1rem;
   font-weight: 600;
 `;
-const TextBox = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  column-gap: 60px;
-  width: 90%;
-  padding-left: 15px;
-`;
 
 const MainCard = ({
   image,
   title,
   category,
-  category2,
-  num,
   onClick,
 }) => {
  // const navigate = useNavigate();
@@ -105,21 +85,14 @@ const MainCard = ({
       <TitleWrapper>
         {title}
       </TitleWrapper>
-      <TextBox>
+      
         <TextWrapper>
           <Margin height="6" />
           {category}
           <Margin height="5" />
-          {category2}
+
         </TextWrapper>
 
-        <TextWrapper2>
-          <Margin height="6" />
-          {num}
-          <Margin height="5" />
-          
-        </TextWrapper2>
-      </TextBox>
     </CardEach>
   );
 };

@@ -60,11 +60,13 @@ const TextWrapper = styled.div`
 const TextWrapper2 = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: right;
+  justify-content: flex-end;
+  align-items: flex-end;
   margin-bottom: 10px;
-  margin-left: 30px;
-  margin-right: 10px;
+  //margin-left: 30px;
+  //margin-right: 10px;
   line-height: 18px;
+  width: 90%;
   color:gray;
 
 `;
@@ -90,13 +92,12 @@ const TextBox = styled.div`
 const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
 `
 
 const MainQuizCard = ({
   image,
   title,
-  category,
-  category2,
   view,
   onClick,
 }) => {
@@ -108,26 +109,19 @@ const MainQuizCard = ({
         <Margin height="5"/>
         {title}
       </TitleWrapper>
-      <TextBox>
-        <TextWrapper>
-          <Margin height="6" />
-          {category}
-          <Margin height="5" />
-          {category2}
-        </TextWrapper>
-
+    
         <TextWrapper2>
           <Margin height="6" />
             <Wrapper>
                 <Margin width="5"/>
                 <GrView /> 
                 <Margin width="10"/>
-                {view}views
+                {view} views
             </Wrapper>
           <Margin height="5" />
           
         </TextWrapper2>
-      </TextBox>
+
     </CardEach>
   );
 };
