@@ -3,6 +3,7 @@ import { getVerified } from "@/lib/session";
 
 export async function POST(req){
 
+    try{
     const session = await req.json();
     const { user_id, username } = getVerified();
 
@@ -21,6 +22,14 @@ export async function POST(req){
     // console.log(username);
 
     return Response.json(newQuiz);
+}catch(error){
+    console.error('Error:', error);
+
+    return new Response(JSON.stringify({ error: 'Invalid token' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+    });
+}
 }
 
 /**

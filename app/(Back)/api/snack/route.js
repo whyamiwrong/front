@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { getVerified } from "@/lib/session";
 
 export async function GET(req) {
     
@@ -8,14 +9,23 @@ export async function GET(req) {
 }
 
 export async function POST(req){
-
+    try{
     const title = await req.json();
-
+    const {user_id, username} = getVerified();
+ 
     const newSnack = await prisma.snack.create({
         data: title,
     });
 
     return Response.json(newSnack);
+}   catch (err){
+    console.error('Error:', err);
+
+    return new Response(JSON.stringify({ error: 'Invalid token' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+    });
+}
 }
 
 /**
