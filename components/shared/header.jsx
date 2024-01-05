@@ -101,9 +101,7 @@ export default function Header({ auth_user = false }) {
                     <Button href="/snack-quiz">
                       Snack Quiz
                     </Button>
-                    <Button href="/code-review">
-                      Code Review
-                    </Button>
+                   
                     <Button href="/ranking">
                       Ranking
                     </Button>
@@ -133,9 +131,7 @@ export default function Header({ auth_user = false }) {
                     <Button href="/snack-quiz">
                       Snack Quiz
                     </Button>
-                    <Button href="/code-review">
-                      Code Review
-                    </Button>
+                    
                     <Button href="/ranking">
                       Ranking
                     </Button>
@@ -176,9 +172,7 @@ export default function Header({ auth_user = false }) {
             <Button href="/snack-quiz">
               Snack Quiz
             </Button>
-            <Button href="/code-review">
-              Code Review
-            </Button>
+            
             <Button href="/ranking">
               Ranking
             </Button>

@@ -69,7 +69,7 @@ const EmptyIcon = styled.div`
 `;
 
 export default function Header({ left = "", right = [], bgColor }) {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("Token");
 
   return (
