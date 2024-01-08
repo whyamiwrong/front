@@ -1,13 +1,17 @@
 import prisma from "@/lib/prisma"
 import { sign } from "@/lib/jwt";
+import { createHashedPassword } from "@/lib/hashing";
 
 export async function POST(req){
     const user = await req.json();
 
+    const { hashedPassword, salt }= await createHashedPassword(user.password);
+
     const signup = await prisma.user.create({
         data: {
             username : user.username,
-            password : user.password,
+            password : hashedPassword,
+            salt : salt,
             phone_number : user.phone_number,
             email : user.email,
         },

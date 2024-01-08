@@ -1,22 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { sign } from "@/lib/jwt";
+import { verifyPassword } from "@/lib/hashing";
 
 export async function POST(req, res) {
   const data = await req.json();
 
   const { username, password } = data;
 
-  const user = await prisma.user.findFirst({
+  const user = await prisma.user.findUnique({
     where:{
       username : username,
     },
   });
 
+  const verified = await verifyPassword(password, user.salt, user.password);
+
   if(user == null){
     throw new Error("User not found")
   } 
-  else if(password != user.password){
+  else if(!verified){
     throw new Error("Invalid password");
   }
   else{
