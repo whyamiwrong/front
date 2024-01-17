@@ -126,7 +126,7 @@ model solutions {
   snack_quiz_id Int
   user_id       Int
   is_correct    Int        @db.TinyInt
-  snack_quiz    snack_quiz @relation(fields: [snack_quiz_id], references: [snack_quiz_id], onUpdate: Restrict, map: "fk_solutions_snack_quiz")
+  snack_quiz    snack_quiz @relation(fields: [snack_quiz_id], references: [snack_quiz_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_snack_quiz")
   user          user       @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_user")
 
   @@index([snack_quiz_id], map: "fk_solutions_snack_quiz")
@@ -138,7 +138,7 @@ model testcases {
   problem_id        Int
   input             String?           @db.Text
   output            String            @db.Text
-  original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: Restrict, map: "fk_testcases_problems")
+  original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_testcases_problems")
 
   @@index([problem_id], map: "fk_testcases_problems")
 }
