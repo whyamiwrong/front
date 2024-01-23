@@ -7,21 +7,20 @@ import Margin from "@/components/Margin/Margin";
 import Typo from "@/components/Typo/Typo";
 
 import {
-    Grid, Typography
+  Grid, Typography
 } from "@mui/material";
 
 import { useSearchParams } from "next/navigation";
 
-
 const Background = styled.div`
   display: flex;
-  flex: wrap;
+  flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute; //내부 div들도 absolute로 두고 z-index 우선순위
-  top: 0px;
-  left:0px;
+  position: absolute;
+  top: 0;
+  left: 0;
   background-image: url("/img/Result/result1.svg");
   background-size: cover;
   background-position: center center;
@@ -31,158 +30,134 @@ const Background = styled.div`
   height: 100vh;
   width: 100vw;
 `;
+
 const BottomWrapper1 = styled.div`
-    position: absolute;
-    top: 85px;
-    left: 96%;
-    // display:flex;
-    //flex: wrap;
-    //flex-direction: row;
-    width: 100vw;
-    //justify-content: flex-end;
-    //align-items: flex-end;
-`
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  //top: 85px;
+  //left: 96%;
+`;
+
 const BottomWrapper2 = styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+`;
 
-    
-    // display:flex;
-    //flex: wrap;
-    //flex-direction: row;
-    width: 100vw;
-    justify-content: center;
-    align-items: center;
-`
 const BottomWrapper3 = styled.div`
-    position: relative;
-    display: flex;
-    flex-direction: row;
-
-    
-    // display:flex;
-    //flex: wrap;
-    //flex-direction: row;
-    //width: 100vw;
-    justify-content: center;
-    align-items: center;
-`
-const CloseBottom = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-image: url("/img/Result/close.svg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: none;
-    //border-radius: 10px;
-    cursor: pointer;
-    height: 30px;
-    width: 30px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: right;
+  width: 95%;
 `;
 
-const QuizResult = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-image: url("/img/Result/QuizResult.svg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: none;
-    //border-radius: 10px;
-    cursor: pointer;
-    height: 150px;
-    width: 285px;
+const IconContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  min-width: 200px;
+  max-width: 410px;
+  height: 150px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 `;
-const Time = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-image: url("/img/Result/Time.svg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: none;
-    //border-radius: 10px;
-    cursor: pointer;
-    // height: 182px;
-    min-width: 200px;
-    max-width: 410px;
+
+const CloseBottom = styled(IconContainer)`
+  background-image: url("/img/Result/close.svg");
+  background-size: cover;
+  background-position: center center;
+  height: 20px;
+  min-width: 20px;
 `;
-const Score = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-image: url("/img/Result/Score.svg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: none;
-    //border-radius: 10px;
-    cursor: pointer;
-    // height: 182px;
-    min-width: 200px;
-    max-width: 410px;
+
+const QuizResult = styled(IconContainer)`
+  background-image: url("/img/Result/QuizResult.svg");
+  background-size: cover;
+  background-position: center center;
+  min-height: 108px;
+  min-width: 205px;
+  height: 11vw;
+  width: 21vw;
 `;
-const RetryButton = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-image: url("/img/Result/RetryButton.svg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: none;
-    //border-radius: 10px;
-    cursor: pointer;
-    height: 76px;
-    width: 200px;
+
+const Time = styled(IconContainer)`
+  background-image: url("/img/Result/Time3.svg");
+  background-size: cover;
+  background-position: center center;
+  min-height: 132px;
+  min-width: 300px;
+  height: auto;
+  width: auto;
+  margin: 20px;
+
 `;
+
+const Score = styled(IconContainer)`
+  background-image: url("/img/Result/Score3.svg");
+  background-size: cover;
+  background-position: center center;
+  min-height: 132px;
+  min-width: 300px;
+  height: auto;
+  width: auto;
+  margin: 20px;
+  
+`;
+
+const RetryButton = styled(IconContainer)`
+  background-image: url("/img/Result/RetryButton.svg");
+  height: 76px;
+  width: 200px;
+`;
+
 export default function Quiz({ params }) {
-    const searchParams = useSearchParams();
-    const duration = searchParams.get("duration");
-    const solved = searchParams.get("solved");
-    const total = searchParams.get("total");
+  const searchParams = useSearchParams();
+  const duration = searchParams.get("duration");
+  const solved = searchParams.get("solved");
+  const total = searchParams.get("total");
 
-
-    return(
-        <Background>
-            <BottomWrapper1>
-                <CloseBottom onClick={() => {window.location.href = "/snack-quiz"}} />
-            </BottomWrapper1>
-            <Margin height="50"/>
-            <BottomWrapper2>
-                <QuizResult/>
-                <Margin height="50"/>
+  return (
+    <Background>
+      <BottomWrapper3>
+        <CloseBottom onClick={() => { window.location.href = "/snack-quiz" }} />
+      </BottomWrapper3>
+      <Margin height="50" />
+      <BottomWrapper2>
+        <QuizResult />
+        <Margin height="50" />
+        
+  
+        
+        <BottomWrapper1>
+            <Time>
                 <Typography variant="h4" align="center">
-                    푸는데 걸린 시간<br/>
-                    <strong>{duration} 초</strong>
+                    <strong>{duration}</strong>
                 </Typography>
-                <Margin height="20"/>
-                <Typography variant="h4" align="center">
-                    점수<br/>
-                    <strong>{Math.round(solved / total * 100)}점({solved} / {total})</strong>
-                </Typography>
-                <Grid container spacing={2} rowSpacing={4}>
-                    <Grid item xs={12} sm={6}>
-                        <Time/>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Score/>
-                    </Grid>
-                </Grid>
-                <Margin height="80"/>
-                <RetryButton onClick={() => {window.history.back()}} />
-            </BottomWrapper2>
+            </Time>
+            
 
-        </Background>
-    )
+            <Score>  
+                <Typography variant="h4" align="center">
+                    <strong> {Math.round((solved / total) * 100)}점 ({solved} / {total}) </strong>
+                </Typography>
+            </Score>
+        </BottomWrapper1>
+        <Margin height="80" />
+        <RetryButton onClick={() => { window.history.back() }} />
+      </BottomWrapper2>
+    </Background>
+  );
 }
