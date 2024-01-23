@@ -2,22 +2,18 @@ import prisma from "@/lib/prisma";
 
     export async function GET(request) {
 
-            const original_problems = await prisma.original_problems.findMany({
+            const problems = await prisma.problems.findMany({
                 select: {
                     problem_id: true,
-                    problems: {
-                        select: {
-                            title: true,
-                            algorithm_category: true
-                        },
-                    },
+                    title: true,
+                    algorithm_category: true,
                 },
                 orderBy: {
                     problem_id : 'asc',
                 },
             })
 
-            return Response.json(original_problems);
+            return Response.json(problems);
     }
 
 
@@ -25,8 +21,8 @@ import prisma from "@/lib/prisma";
  * @swagger
  * /problems:
  *   get:
- *     summary: Original_problems 문제 리스트를 반환합니다
- *     tags : [Original Problems]
+ *     summary: Problems 문제 리스트를 반환합니다
+ *     tags : [Problems]
  *     responses:
  *       200:
  *         description: Successful response
@@ -34,9 +30,8 @@ import prisma from "@/lib/prisma";
  *           application/json:
  *             example:
  *               - problem_id: 1
- *                 problems:
- *                   title: "피보나치 수열"
- *                   algorithm_category: "다이나믹 프로그래밍"
+ *                 title: "피보나치 수열"
+ *                 algorithm_category: "다이나믹 프로그래밍"
  */
     /*
     -- problems 테이블에 데이터 삽입

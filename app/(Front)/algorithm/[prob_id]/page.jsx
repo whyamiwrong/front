@@ -123,7 +123,7 @@ export default function Algorithm({ params }) {
       }}
     >
       <Typography variant="h4">
-        <span className="basic-gray">{`#${params.prob_id}`}</span> {problem_data.problems.title}
+        <span className="basic-gray">{`#${params.prob_id}`}</span> {problem_data.title}
       </Typography>
       <Grid container spacing={2} rowSpacing={4}>
         <Grid item xs={12} sm={6}>
@@ -132,21 +132,21 @@ export default function Algorithm({ params }) {
               <Typography variant="h6">문제</Typography>
               <Divider />
               <Typography variant="body2">
-                {problem_data.problems.description}
+                {problem_data.description}
               </Typography>
             </Box>
             <Box>
               <Typography variant="h6">시간 제한</Typography>
               <Divider />
               <Typography variant="body2">
-                {problem_data.problems.time_limit * 1000}ms
+                {problem_data.time_limit * 1000}ms
               </Typography>
             </Box>
             <Box>
               <Typography variant="h6">메모리 제한</Typography>
               <Divider />
               <Typography variant="body2">
-                {problem_data.problems.memory_limit}mb
+                {problem_data.memory_limit}mb
               </Typography>
             </Box>
             <Box>
@@ -179,7 +179,7 @@ export default function Algorithm({ params }) {
               <Divider />
               {/* {problem_data.algorithm.map((algo, index) => ( */}
                 <Typography variant="body2">
-                  ⏺ {problem_data.problems.algorithm_category}
+                  ⏺ {problem_data.algorithm_category}
                   {/* ⏺ {algo} */}
                 </Typography>
               {/* ))} */}
