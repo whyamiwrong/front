@@ -33,10 +33,11 @@ model bookmarks {
 }
 
 model examples {
-  examples_id Int     @id @default(autoincrement())
+  examples_id Int      @id @default(autoincrement())
   problem_id  Int
-  input       String? @db.Text
-  output      String  @db.Text
+  input       String?  @db.Text
+  output      String   @db.Text
+  problems    problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_examples_problems")
 
   @@index([problem_id], map: "fk_examples_problems")
 }
@@ -48,12 +49,6 @@ model hints {
   problems         problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_hints_problems")
 
   @@index([problem_id], map: "fk_hints_problems1")
-}
-
-model original_problems {
-  problem_id Int         @id @default(autoincrement())
-  problems   problems    @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_original_problems_problems1")
-  testcases  testcases[]
 }
 
 model problems {
@@ -70,8 +65,9 @@ model problems {
   views              Int                 @default(0)
   bookmarks          bookmarks[]
   comments           comments[]
+  examples           examples[]
   hints              hints[]
-  original_problems  original_problems?
+  testcases          testcases[]
 }
 
 model profile {
@@ -98,13 +94,13 @@ model solutions {
 }
 
 model testcases {
-  testcase_id       Int               @id @default(autoincrement())
+  testcase_id       Int      @id @default(autoincrement())
   problem_id        Int
-  input             String?           @db.Text
-  output            String            @db.Text
-  original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_testcases_problems")
+  input             String?  @db.Text
+  output            String   @db.Text
+  original_problems problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_testcases_problems")
 
-  @@index([problem_id], map: "fk_testcases_problems")
+  @@index([problem_id], map: "fk_testcases_problems_idx")
 }
 
 model comments {

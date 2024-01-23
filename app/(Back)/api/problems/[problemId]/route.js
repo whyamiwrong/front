@@ -3,17 +3,13 @@ import { getVerified } from "@/lib/session";
 //import {code} from "../../../../(Front)/algorithm/[prob_id]/page"
 
 
-//original problems, problems에서는 
+// problems, problems에서는 
 export async function GET(request, { params }) {
 
         const problem_id = parseInt(params.problemId);
-        const original_problems = await prisma.original_problems.findUnique({
+        const problems = await prisma.problems.findUnique({
             where:{
                 problem_id : problem_id,
-            },
-            select:{
-                problem_id:true,
-                problems:true
             }
         });
 
@@ -38,7 +34,7 @@ export async function GET(request, { params }) {
         })
 
         const result = {
-            ...original_problems,
+            ...problems,
             examples: examples,
             testcases: testcases,
         };
@@ -46,20 +42,19 @@ export async function GET(request, { params }) {
         return Response.json(result);
 }
 
-
 /**
  * @swagger
  * /problems/{problemId}:
  *   get:
- *     summary: 특정 Original problem의 정보를 반환합니다
- *     tags: [Original Problems]
+ *     summary: 특정 Problem의 정보를 반환합니다
+ *     tags: [Problems]
  *     parameters:
  *       - in: path
  *         name: problemId
  *         required: true
  *         schema:
  *           type: integer
- *         description: 정보를 얻고자하는 Original problem의 ID
+ *         description: 정보를 얻고자하는 Problem의 ID
  *     responses:
  *       200:
  *         description: Successful response
@@ -70,13 +65,10 @@ export async function GET(request, { params }) {
  *               properties:
  *                 problem_id:
  *                   type: number
- *                 problems:
- *                   type: object
- *                   properties:
- *                     title:
- *                       type: string
- *                     algorithm_category:
- *                       type: string
+ *                 title:
+ *                   type: string
+ *                 algorithm_category:
+ *                   type: string
  *                 examples:
  *                   type: array
  *                   items:
@@ -210,7 +202,7 @@ async function update_solved(){
 //     problem_id        Int
 //     input             String            @db.Text
 //     output            String            @db.Text
-//     original_problems original_problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: Restrict, map: "fk_testcases_problems")
+//     _problems _problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: Restrict, map: "fk_testcases_problems")
 //
 //     @@index([problem_id], map: "fk_testcases_problems")
 //   }

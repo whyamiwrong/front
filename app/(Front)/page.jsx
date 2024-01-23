@@ -114,8 +114,8 @@ export default function HomePage() {
             <Link key={idx} href={`/algorithm/${problem.problem_id}`} style={{textDecoration: "none"}}>
               <MainCard
                 image={`https://source.unsplash.com/random?${idx}`}
-                title={problem.problems?.title}
-                category={problem.problems?.algorithm_category}
+                title={problem?.title}
+                category={problem?.algorithm_category}
               />
             </Link>
           ))
