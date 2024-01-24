@@ -37,6 +37,7 @@ export async function POST(req){
  * /auth/signup:
  *   post:
  *     summary: 사용자 회원가입
+ *     tags: [Auth]
  *     description: 사용자의 회원가입을 처리하고 인증 토큰을 발급합니다.
  *     requestBody:
  *       description: 사용자 정보를 포함한 JSON 데이터

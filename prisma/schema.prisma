@@ -8,18 +8,19 @@ datasource db {
 }
 
 model user {
-  user_id           Int         @id @default(autoincrement())
-  username          String      @unique(map: "username_UNIQUE") @db.VarChar(50)
-  password          String      @db.VarChar(255)
-  salt              String      @db.VarChar(255)
-  phone_number      String?     @db.Text
-  email             String      @db.VarChar(100)
-  solved            Int?        @default(0)
-  registration_date DateTime?   @default(now()) @db.Timestamp(0)
+  user_id           Int           @id @default(autoincrement())
+  username          String        @unique(map: "username_UNIQUE") @db.VarChar(50)
+  password          String        @db.VarChar(255)
+  salt              String        @db.VarChar(255)
+  phone_number      String?       @db.Text
+  email             String        @db.VarChar(100)
+  solved            Int?          @default(0)
+  registration_date DateTime?     @default(now()) @db.Timestamp(0)
   bookmarks         bookmarks[]
   comments          comments[]
   profile           profile[]
   solutions         solutions[]
+  submissions       submissions[]
 }
 
 model bookmarks {
@@ -58,6 +59,7 @@ model problems {
   limitations        String?             @db.MediumText
   difficulty         problems_difficulty @default(easy)
   example_code       String?             @db.Text
+  created_by         String              @db.VarChar(50)
   created_at         DateTime            @default(now()) @db.Timestamp(0)
   time_limit         Decimal?            @db.Decimal(5, 2)
   memory_limit       Int?
@@ -67,6 +69,7 @@ model problems {
   comments           comments[]
   examples           examples[]
   hints              hints[]
+  submissions        submissions[]
   testcases          testcases[]
 }
 
@@ -136,6 +139,18 @@ model snack_quiz {
   solutions     solutions[]
 
   @@index([snack_id], map: "fk_snack_quiz_snack_idx")
+}
+
+model submissions {
+  submission_id Int      @id @default(autoincrement())
+  problem_id    Int
+  user_id       Int
+  is_correct    Int      @db.TinyInt
+  problems      problems @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_submissions_problems")
+  user          user     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_submissions_user")
+
+  @@index([problem_id], map: "fk_submissions_problems_idx")
+  @@index([user_id], map: "fk_submissions_user_idx")
 }
 
 enum problems_difficulty {

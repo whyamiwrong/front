@@ -30,38 +30,49 @@ import { getVerified } from "@/lib/session";
 */
 
 export async function POST(req){
-    const { title, description, algorithm_category, example_code, examples, testcases } = await req.json();
+    try{
+        const { title, description, algorithm_category, example_code, examples, testcases } = await req.json();
+        const { user_id, username } = getVerified();
 
-    const new_problem = await prisma.problems.create({
-        data: {
-            title: title,
-            description: description,
-            algorithm_category: algorithm_category,
-            example_code: example_code,
-        },
-    });
-
-    for(let i = 0; i < examples.length; i++){
-        const new_examples = await prisma.examples.create({
+        const new_problem = await prisma.problems.create({
             data: {
-                problem_id: new_problem.problem_id,
-                input: examples[i].input,
-                output: examples[i].output,
+                title: title,
+                description: description,
+                algorithm_category: algorithm_category,
+                example_code: example_code,
+                created_by: username,
             },
         });
-    };
 
-    for(let i = 0; i < testcases.length; i++){
-        const new_testcases = await prisma.testcases.create({
-            data: {
-                problem_id: new_problem.problem_id,
-                input: testcases[i].input,
-                output: testcases[i].output,
-            },
+        for(let i = 0; i < examples.length; i++){
+            const new_examples = await prisma.examples.create({
+                data: {
+                    problem_id: new_problem.problem_id,
+                    input: examples[i].input,
+                    output: examples[i].output,
+                },
+            });
+        };
+
+        for(let i = 0; i < testcases.length; i++){
+            const new_testcases = await prisma.testcases.create({
+                data: {
+                    problem_id: new_problem.problem_id,
+                    input: testcases[i].input,
+                    output: testcases[i].output,
+                },
+            });
+        };
+
+        return Response.json(new_problem);
+    } catch(error) { 
+        console.error('Error:', error);
+
+        return new Response(JSON.stringify({ error: 'Invalid token' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' },
         });
-    };
-
-    return Response.json(new_problem);
+    }
 }
 
 /**
@@ -118,4 +129,6 @@ export async function POST(req){
  *     responses:
  *       '200':
  *         description: 성공적인 응답. 생성된 문제에 대한 정보를 반환합니다.
+ *       '401':
+ *         description: 토큰 인증 오류
  */
