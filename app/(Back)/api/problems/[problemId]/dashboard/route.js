@@ -1,6 +1,19 @@
 import prisma from '@/lib/prisma';
 import { getVerified } from '@/lib/session';
 
+async function getUserNameById(user_id) {
+  const user = await prisma.user.findUnique({
+    where: {
+      user_id: user_id,
+    },
+    select: {
+      username: true,
+    },
+  });
+
+  return user ? user.username : null;
+}
+
 export async function GET(req, { params }) {
   try {
     const problem_id = parseInt(params.problemId);
@@ -36,17 +49,33 @@ export async function GET(req, { params }) {
       if (submissions[i].is_correct) solved++;
     }
 
-    const userCount = await prisma.submissions.count({
-      where: {
-        problem_id: problem_id,
-      },
-      distinct: ['user_id'],
-    });
+    const userSubmissions = {};
 
-    const answer_percent = (solved / tot) * 100;
-    const avg_submissions = userCount / tot;
+    for(let i = 0; i < submissions.length; i++){
+      const user_id = submissions[i].user_id;
+      const username = await getUserNameById(user_id);
 
-    return Response.json({ answer_percent, avg_submissions });
+      if(userSubmissions.hasOwnProperty(username)) {
+        userSubmissions[username]++;
+      } else {
+        userSubmissions[username] = 1;
+      }
+    }
+
+    const userSubmissionDetails = [];
+
+    for(const [username, submissionCount] of Object.entries(userSubmissions)) {
+      userSubmissionDetails.push({
+        username,
+        submissionCount,
+      });
+    }
+
+    
+    
+    const answer_percent = ((solved / tot) * 100) + '%';
+
+    return Response.json({ answer_percent, userSubmissionDetails });
   } catch (err) {
     console.log(err);
 
@@ -59,11 +88,11 @@ export async function GET(req, { params }) {
 
 /**
  * @swagger
- * /problem/{problemId}/dashboard:
+ * /problems/{problemId}/dashboard:
  *   get:
- *     summary: 문제에 대한 통계 정보를 반환합니다.
+ *     summary: 제출자에 한하여, 문제에 대한 통계 정보를 반환합니다.
  *     tags: [Problems]
- *     description: 특정 문제에 대하여, 정답률과 평균 제출 횟수를 반환합니다.
+ *     description: 특정 문제에 대하여, 정답률과 유저별 제출 횟수를 반환합니다.
  *     parameters:
  *       - in: path
  *         name: problemId
@@ -78,7 +107,11 @@ export async function GET(req, { params }) {
  *           application/json:
  *             example:
  *               answer_percent: 75
- *               avg_submissions: 3.5
+ *               userSubmissionDetails:
+ *                 - user_id : 1
+ *                   submissionCount : 2
+ *                 - user_id : 3
+ *                   submissionCount : 4
  *       '401':
  *         description: Unauthorized
  *         content:
