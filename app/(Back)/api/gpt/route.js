@@ -1,8 +1,6 @@
 //const dotenv = require('dotenv');
 import prisma from "@/lib/prisma";
 import { getVerified } from "@/lib/session";
-import fs from "fs";
-//const fs = require("fs");
 let extractedData = ''; 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
@@ -10,48 +8,41 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 function fileToGenerativePart(data, mimeType) {
   return {
     inlineData: {
-      data: Buffer.from(data).toString("base64"),
+      data: data,
       mimeType
     },
   };
 }
 
-
 export async function POST(request) {
-  try{
+  try {
   const session = await request.json();
   const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
- 
-  const prompt = `너는 이제 컴퓨터공학과의 TA야. 학생들을 위한 문제를 내야해. 이미지를 분석하고 해당 이미지가 포함하는 내용을 이해하고 이와 관련된 주제에 대해 묻는 객관식 1문제(4 choices)를 출제 해. 문제의 형식은 반드시 아래 형식과 똑같아야 해. 두 번 이상 \n을 출력하지마. 선지를 제시하기 전에 문제 설명에 힌트를 담으면 안돼. 4가지 선지 중에 정답인 선지는 랜덤으로 정해줘. tag value에는 해당 문제와 관련한 알고리즘 분류를 적어줘. 무조건 \`\`\`json으로 시작해\n
+  var prompt = '';
+  if (session.type == 'multi') prompt = `너는 이제 컴퓨터공학과의 TA야. 학생들을 위한 컴퓨터 공학 전공 관련 문제를 내야해. 너는 이미지들을 분석해서 모든 이미지들이 포함하고 있는 내용을 이해하고, 이미지들의 공통적인 주제 + keyword + '${session.subject}'에 대한 객관식 1문제(4 choices)를 출제 해. 이는 반드시 컴퓨터 공학도에게 관련 있어야 해. 객관식 문제의 형식은 반드시 아래 형식과 똑같아야 해. 두 번 이상 \n을 출력하지마. 선지를 제시하기 전에 문제 설명에 주제어를 포함하면 안돼. 문제의 난이도는 '${session.difficulty}'야. 4가지 선지 중에 정답인 선지는 랜덤으로 정해줘. tag value에는 해당 문제와 관련한 알고리즘 분류를 적어줘. 무조건 \`\`\`json으로 시작해\n
   \`\`\`json{"title": "알고리즘 문제 제목","description": "알고리즘 문제 설명","selections": {"1": "선지1","2": "선지2","3": "선지3","4": "선지4","answer": "정답인 key"},"tag": {"1": "문제와 관련한 알고리즘 분류"}}`
-   const imagePath = "/Users/ihaesu/Desktop/test/learning.png";
-  const imageData = fs.readFileSync(imagePath);
+  else if (session.type == 'ox') prompt = `이미지들을 분석해서 이미지들이 공통적으로 포함하는 주제를 이해해줘 + '${session.subject}' 이러한 주제와 관련된 true or false 1문제(정답은 O or X)를 출제 해. 문제의 난이도는 꼭 '${session.difficulty}'하게 내줘. OX 문제의 description에는 반드시 참 거짓 여부를 질문하는 문제 내용이 들어가야 해. selection 에는 내가 지정한대로 O, X만 들어갈거야. OX 문제의 형식은 반드시 아래 형식과 똑같아야 해. 두 번 이상 \n을 출력하지마. tag value에는 해당 문제와 관련한 알고리즘 분류를 적어줘. 무조건 \`\`\`json으로 시작해\n
+  \`\`json{"title": "알고리즘 문제 제목","description": "true or false 문제 내용","selections": {"1": "true","2": "false","answer": "정답인 key"},"tag": {"1": "문제와 관련한 알고리즘 분류"}}`
 
+  console.log(session);
+
+  const URL = session.images;
+  const urls = [];
+
+  for(let i = 0; i < URL.length; i++){
+      urls[i] = fileToGenerativePart(URL[i], "image/png");
+  }
+
+  console.log(urls[1]);
   const imageParts = [
-    fileToGenerativePart(imageData, "image/png"),
+    urls[0], urls[1], urls[2], urls[3], urls[4]
   ];
   
-  // const uploadedFile = request.files && request.files[0];
-  //   if (!uploadedFile) {
-  //     throw new Error("No file uploaded");
-  //   }
-
-  //   const imageParts = [
-  //     fileToGenerativePart(uploadedFile.content, uploadedFile.mimeType),
-  //   ];
-
     const result = await model.generateContent([prompt, ...imageParts]);
     const response = await result.response;
     const text = response.text();
+
     console.log(text);
-
-    // let extractedData = response.text();
-    // console.log(extractedData);
-    // extractedData = extractedData.slice(extractedData.indexOf('{'), extractedData.lastIndexOf('}') + 1);
-
-    // console.log(extractedData)
-    // extractedData = JSON.parse(extractedData);
-    // console.log(extractedData);
 
     if (extractedData?.answer) {
       extractedData.selections = {...extractedData.selections, answer: extractedData.answer}
@@ -67,8 +58,7 @@ export async function POST(request) {
     }
 
     // POST 함수 호출
-
-    const {user_id, username} = getVerified();
+//    const {user_id, username} = getVerified();
 
     const newQuiz = await prisma.snack_quiz.create({
         data: {
@@ -82,6 +72,7 @@ export async function POST(request) {
     });
 
     return Response.json({newQuiz})}
+
     catch(error){
         console.error('Error:', error);
 
@@ -91,73 +82,6 @@ export async function POST(request) {
         });
     }
 } 
-
-// export async function POST(request) {
-//     try {
-//         // Request에서 JSON 데이터 추출
-//         //const requestData = await request.json();
-//         console.log(extractedData);
-//         // 추출된 데이터를 활용하여 새로운 퀴즈 생성
-//         const newQuiz = await prisma.snack_quiz.create({
-//             data: {
-//                 snack_id: 1,
-//                 title: 'test',
-//                 description: 'testtest',
-//                 selections: 'test0103',
-//                 created_by: 'test',
-//                 tag: 'extractedData.tag',
-//             },
-//         });
-
-//         return new Response(JSON.stringify({ newQuiz }), {
-//             headers: { 'Content-Type': 'application/json' },
-//         });
-//     } catch (error) {
-//         console.error('Error:', error);
-
-//         return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
-//             status: 500,
-//             headers: { 'Content-Type': 'application/json' },
-//         });
-//     }
-// }
-
-
-
-function extractInfoFromGPTResponse(gptResponse) {
-  console.log(gptResponse);
-  const lines = gptResponse.split('\n');
-  let choice1 = '';
-  let choice2 = '';
-  let choice3 = '';
-  let choice4 = '';
-  let title = '';
-  let description = '';
-  let selections = '';
-  let tag = '';
-
-  for (const line of lines) {
-    if (line.startsWith('문제 제목:')) {
-      title = line.slice(7).trim();
-    } else if (line.startsWith('문제 설명:')) {
-      description = line.slice(7).trim();
-    } else if (line.startsWith('1.')) {
-      choice1 = line.slice(3).trim();
-    } else if (line.startsWith('2.')) {
-      choice2 = line.slice(3).trim();
-    } else if (line.startsWith('3.')) {
-      choice3 = line.slice(3).trim();
-    } else if (line.startsWith('4.')) {
-      choice4 = line.slice(3).trim();
-    } else if (line.startsWith('정답:')) {
-      selections = line.slice(4).trim();
-    } else if (line.startsWith('관련 태그:')) {
-      tag = line.slice(7).trim();
-    }
-  }
-
-  return { title, description, choice1, choice2, choice3, choice4 , selections, tag };
-}
 
 /**
  * @swagger
