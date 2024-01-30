@@ -103,7 +103,6 @@ export async function POST(request) {
 // }
 
 
-
 function extractInfoFromGPTResponse(gptResponse) {
   console.log(gptResponse);
   const lines = gptResponse.split('\n');
