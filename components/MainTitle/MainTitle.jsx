@@ -7,7 +7,9 @@ import Link from 'next/link'
 
 
 const Wrapper = styled.div`
-  width: 100%;
+
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

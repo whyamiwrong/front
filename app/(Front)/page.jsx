@@ -104,7 +104,7 @@ export default function HomePage() {
   return !isLoading ?(
 <RecoilRoot>
         <AdSlider />
-        <Margin height="10" />
+        <Margin height="5" />
         <Link href="/algorithm1" style={{textDecoration:"none"}}>
           <MainTitle text="인기있는 알고리즘 풀러 가볼까요? >" />
         </Link>
