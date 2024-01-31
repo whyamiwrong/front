@@ -113,7 +113,7 @@ export default function HomePage() {
           {problems.map((problem, idx) => (
             <Link key={idx} href={`/algorithm/${problem.problem_id}`} style={{textDecoration: "none"}}>
               <MainCard
-                image={`https://source.unsplash.com/random?${idx}`}
+                image={`https://source.unsplash.com/random/?programming,algorithm,math?${idx}`}
                 title={problem?.title}
                 category={problem?.algorithm_category}
               />
@@ -132,7 +132,7 @@ export default function HomePage() {
                 {snacks.map((item, idx) => (
                   <Link key={idx} href={`/snack-quiz/${item.snack_id}?title=${item.title}`} style={{textDecoration: "none"}}>
                     <MainQuizCard
-                      image={`https://source.unsplash.com/random?${idx}`}
+                      image={`https://source.unsplash.com/random/?programming,quiz${idx}`}
                       title={item.title}
                       view={item.views}
                     />

@@ -9,7 +9,7 @@ export const adImgs = atom({
       "/img/Logo/HeroE.svg",
       "/img/Logo/niting.svg",
       "/img/Logo/algorithm.svg",
-      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random/?programming,algorithm,math",
       
     ],
   });
