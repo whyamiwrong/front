@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   height: 33vw;
+  //min-height: 140px;
   max-height: 400px;
   //min-height: 180px;
   position: relative;
