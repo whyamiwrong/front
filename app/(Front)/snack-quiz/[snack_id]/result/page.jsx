@@ -156,7 +156,8 @@ export default function Quiz({ params }) {
             </Score>
         </BottomWrapper1>
         <Margin height="80" />
-        <RetryButton onClick={() => { window.history.back() }} />
+        <RetryButton onClick={() => { window.location.href = `/snack-quiz/${params.snack_id}` }} />
+
       </BottomWrapper2>
     </Background>
   );

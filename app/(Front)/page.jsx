@@ -24,7 +24,7 @@ import CodeReviewCard from "../../components/Card/CodeReviewCard/CodeReviewCard"
 import Link from "next/link";
 import MainQuizCard from "@/components/Card/MainQuizCard/MainQuizCard"
 import axios from "axios";
-
+import HomeInfo from "@/components/HomeInfo/HomeInfo"
 
 //import Header from "../../components/Header/Header"; 라우팅 이해필요..
 
@@ -104,7 +104,9 @@ export default function HomePage() {
   return !isLoading ?(
 <RecoilRoot>
         <AdSlider />
-        <Margin height="10" />
+        <Margin height="30" />
+        <HomeInfo/>
+        <Margin height="30"/>
         <Link href="/algorithm1" style={{textDecoration:"none"}}>
           <MainTitle text="인기있는 알고리즘 풀러 가볼까요? >" />
         </Link>
@@ -113,7 +115,7 @@ export default function HomePage() {
           {problems.map((problem, idx) => (
             <Link key={idx} href={`/algorithm/${problem.problem_id}`} style={{textDecoration: "none"}}>
               <MainCard
-                image={`https://source.unsplash.com/random?${idx}`}
+                image={`https://source.unsplash.com/random/?programming,algorithm,math?${idx}`}
                 title={problem?.title}
                 category={problem?.algorithm_category}
               />
@@ -132,7 +134,7 @@ export default function HomePage() {
                 {snacks.map((item, idx) => (
                   <Link key={idx} href={`/snack-quiz/${item.snack_id}?title=${item.title}`} style={{textDecoration: "none"}}>
                     <MainQuizCard
-                      image={`https://source.unsplash.com/random?${idx}`}
+                      image={`https://source.unsplash.com/random/?programming,quiz${idx}`}
                       title={item.title}
                       view={item.views}
                     />

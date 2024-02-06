@@ -18,8 +18,9 @@ const Wrapper = styled.div`
   //background-color: whitesmoke;
 `;
 const SliderXwrapper2 = styled.div`
-  position: relative;
+   position: relative;
   overflow-x: scroll;
+  overFlow-y: hidden;
   min-height: 300px;
   width: 100%;
   scroll-snap-type: x mandatory;
