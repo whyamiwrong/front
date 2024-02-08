@@ -123,6 +123,7 @@ model snack {
   snack_id   Int          @id @default(autoincrement())
   title      String?      @db.VarChar(100)
   views      Int          @default(0)
+  created_by String       @db.VarChar(50)
   snack_quiz snack_quiz[]
 }
 
@@ -151,6 +152,14 @@ model submissions {
 
   @@index([problem_id], map: "fk_submissions_problems_idx")
   @@index([user_id], map: "fk_submissions_user_idx")
+}
+
+model snack_solutions {
+  snack_solutions_id Int    @id @default(autoincrement())
+  snack_id           String @db.VarChar(45)
+  user_id            String @db.VarChar(45)
+  score              Int
+  duration           Int
 }
 
 enum problems_difficulty {

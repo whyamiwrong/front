@@ -10,22 +10,25 @@ export async function GET(req) {
 
 export async function POST(req){
     try{
-    const title = await req.json();
-    const {user_id, username} = getVerified();
- 
-    const newSnack = await prisma.snack.create({
-        data: title,
-    });
+        const session = await req.json();
+        const {user_id, username} = getVerified();
+    
+        const newSnack = await prisma.snack.create({
+            data: {
+                title: session.title,
+                created_by: username,
+            }
+        });
 
-    return Response.json(newSnack);
-}   catch (err){
-    console.error('Error:', err);
+        return Response.json(newSnack);
+    }   catch (err){
+        console.error('Error:', err);
 
-    return new Response(JSON.stringify({ error: 'Invalid token' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-    });
-}
+        return new Response(JSON.stringify({ error: 'Invalid token' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' },
+        });
+    }
 }
 
 /**
@@ -46,7 +49,9 @@ export async function POST(req){
  *               - snack_id: 2
  *                 title: "연결 리스트"
  *                 views: 0
-*   post:
+ *   post:
+ *     security:
+ *       - cookieAuth: [] 
  *     summary: 새로운 스낵 문제를 생성합니다.
  *     tags: [Snack]
  *     requestBody:

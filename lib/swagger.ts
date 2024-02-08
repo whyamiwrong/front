@@ -37,10 +37,10 @@ const servers = [
 
 const components = {
     securitySchemes: {
-      BearerAuth: {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
+      cookieAuth: {
+        type: 'apiKey',
+        in: 'cookie',
+        name: '_TOKEN',
       },
     },
 }
@@ -57,16 +57,7 @@ export const getApiDocs = async () => {
         // description: '맞왜틀 API',
       },
       servers: servers,
-      // components: {
-      //   securitySchemes: {
-      //     BearerAuth: {
-      //       type: 'http',
-      //       scheme: 'bearer',
-      //       bearerFormat: 'JWT',
-      //     },
-      //   },
-      // },
-      security: [],
+      components: components,
     },
   });
   return spec;

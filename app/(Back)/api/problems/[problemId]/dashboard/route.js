@@ -90,6 +90,8 @@ export async function GET(req, { params }) {
  * @swagger
  * /problems/{problemId}/dashboard:
  *   get:
+ *     security:
+ *       - cookieAuth: [] 
  *     summary: 제출자에 한하여, 문제에 대한 통계 정보를 반환합니다.
  *     tags: [Problems]
  *     description: 특정 문제에 대하여, 정답률과 유저별 제출 횟수를 반환합니다.
@@ -106,22 +108,14 @@ export async function GET(req, { params }) {
  *         content:
  *           application/json:
  *             example:
- *               answer_percent: 75
+ *               answer_percent: 75%
  *               userSubmissionDetails:
- *                 - user_id : 1
+ *                 - username : kim
  *                   submissionCount : 2
- *                 - user_id : 3
- *                   submissionCount : 4
+ *                 - username : park
+ *                   submissionCount : 3
  *       '401':
- *         description: Unauthorized
- *         content:
- *           application/json:
- *             example:
- *               error: Unauthorized
+ *         description: Invalid token
  *       '500':
  *         description: Internal Server Error
- *         content:
- *           application/json:
- *             example:
- *               error: Internal Server Error
  */
