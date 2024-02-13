@@ -6,16 +6,14 @@ import MainCard from "@/components/Card/MainCard/MainCard";
 import Margin from "@/components/Margin/Margin";
 import QuizCard from "@/components/Card/QuizCard/QuizCard";
 import Typo from "@/components/Typo/Typo";
-
+import { Button } from "@mui/material";
 import { Typography, Box, LinearProgress } from "@mui/material";
-
 import Link from "next/link";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 
 const TitleWrapper = styled.div`
   position: relative;
-
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -25,14 +23,10 @@ const TitleWrapper = styled.div`
   align-items: center;
 `;
 const Wrapper = styled.div`
-  position: relative;
-
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  flex: auto;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -40,7 +34,6 @@ const IconWrapper = styled.div`
   position: relative;
   left: 0px;
   top: 0px;
-
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -52,7 +45,6 @@ const IconWrapper = styled.div`
 
 const ResultBottom = styled.div`
   display: flex;
-
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -61,11 +53,23 @@ const ResultBottom = styled.div`
   background-position: center center;
   background-repeat: no-repeat;
   background-color: none;
-  //border-radius: 10px;
   cursor: pointer;
-
   height: 65px;
   width: 170px;
+`;
+
+const ResultButton2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: purple;
+  height: 65px;
+  width: 170px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 9px;
+  box-shadow: 8px 8px 8px 5px rgba(67, 0, 209, 0.05);
 `;
 
 export default function Quiz({ params }) {
@@ -174,7 +178,20 @@ export default function Quiz({ params }) {
             onButtonClick={handleButtonClick} // 버튼 클릭 핸들러
           />
         ))}
-        <ResultBottom onClick={() => handleSubmission()} />
+      <Button variant="contained" onClick={() => handleSubmission()} sx={{ 
+        height: "65px", 
+        width: "170px", 
+        borderRadius: "90px", 
+        cursor: "pointer", 
+        margin: "9px", 
+        boxShadow: "8px 8px 8px 5px rgba(67, 0, 209, 0.05)", 
+        backgroundColor:"purple",
+        '&:hover': {
+          backgroundColor: "rgb(158, 0, 194)" // 호버 시 색상 변경
+        }
+        }}>
+        제출
+      </Button>
       </Wrapper>
       <Margin height="50" />
       <Box sx={{ width:"100%", position: "fixed", bottom: "0px", left: "0" }}>
@@ -183,5 +200,3 @@ export default function Quiz({ params }) {
     </>
   );
 }
-
-
