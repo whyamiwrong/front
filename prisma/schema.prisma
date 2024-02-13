@@ -8,17 +8,18 @@ datasource db {
 }
 
 model user {
-  user_id           Int           @id @default(autoincrement())
-  username          String        @unique(map: "username_UNIQUE") @db.VarChar(50)
-  password          String        @db.VarChar(255)
-  salt              String        @db.VarChar(255)
-  phone_number      String?       @db.Text
-  email             String        @db.VarChar(100)
-  solved            Int?          @default(0)
-  registration_date DateTime?     @default(now()) @db.Timestamp(0)
+  user_id           Int               @id @default(autoincrement())
+  username          String            @unique(map: "username_UNIQUE") @db.VarChar(50)
+  password          String            @db.VarChar(255)
+  salt              String            @db.VarChar(255)
+  phone_number      String?           @db.Text
+  email             String            @db.VarChar(100)
+  solved            Int?              @default(0)
+  registration_date DateTime?         @default(now()) @db.Timestamp(0)
   bookmarks         bookmarks[]
   comments          comments[]
   profile           profile[]
+  snack_solutions   snack_solutions[]
   solutions         solutions[]
   submissions       submissions[]
 }
@@ -120,10 +121,12 @@ model comments {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model snack {
-  snack_id   Int          @id @default(autoincrement())
-  title      String?      @db.VarChar(100)
-  views      Int          @default(0)
-  snack_quiz snack_quiz[]
+  snack_id        Int               @id @default(autoincrement())
+  title           String?           @db.VarChar(100)
+  views           Int               @default(0)
+  created_by      String            @db.VarChar(50)
+  snack_quiz      snack_quiz[]
+  snack_solutions snack_solutions[]
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -151,6 +154,19 @@ model submissions {
 
   @@index([problem_id], map: "fk_submissions_problems_idx")
   @@index([user_id], map: "fk_submissions_user_idx")
+}
+
+model snack_solutions {
+  snack_solutions_id Int   @id @default(autoincrement())
+  snack_id           Int
+  user_id            Int
+  score              Int
+  duration           Int
+  snack              snack @relation(fields: [snack_id], references: [snack_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_snack_solutions_snack")
+  user               user  @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_snack_solutions_user")
+
+  @@index([snack_id], map: "fk_snack_solutions_snack_idx")
+  @@index([user_id], map: "fk_snack_solutions_user_idx")
 }
 
 enum problems_difficulty {

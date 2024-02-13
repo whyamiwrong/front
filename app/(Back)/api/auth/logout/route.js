@@ -23,6 +23,6 @@ export async function GET(req, res) {
  *     summary: cookie 에서 jwt를 삭제합니다.
  *     tags : [Auth]
  *     responses:
- *       200:
- *         description: 'logout success'
+ *       '200':
+ *         description: 'OK'
  */

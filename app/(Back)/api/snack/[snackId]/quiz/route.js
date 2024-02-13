@@ -36,6 +36,8 @@ export async function POST(req){
  * @swagger
  * /snack/{snackId}/quiz:
  *   post:
+ *     security:
+ *       - cookieAuth: []  
  *     summary: 스낵 내에서 새로운 퀴즈를 생성합니다.
  *     tags: [Snack]
  *     requestBody:
