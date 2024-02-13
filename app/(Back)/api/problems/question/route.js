@@ -79,6 +79,8 @@ export async function POST(req){
  * @swagger
  * /problems/question:
  *   post:
+ *     security:
+ *       - cookieAuth: [] 
  *     summary: 새로운 문제를 생성합니다.
  *     tags:
  *       - Problems

@@ -144,6 +144,11 @@ export default function Quiz({ params }) {
       // 페이지 이동을 하기 전에 현재 페이지에서 상태를 업데이트
       setSolved(correct);
       setTotal(total_);
+      
+      const result = await axios.post(`/api/snack/${params.snack_id}/result`, {
+        score: Math.round((correct / total_) * 100),
+        duration: Math.floor((new Date() - startTime) / 1000)
+      });
   
       // 페이지 이동
       window.location.href = `/snack-quiz/${params.snack_id}/result?title=${title}&duration=${Math.floor((new Date() - startTime) / 1000)}&solved=${correct}&total=${total_}`;
