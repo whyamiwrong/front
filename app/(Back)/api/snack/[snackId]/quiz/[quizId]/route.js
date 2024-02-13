@@ -82,6 +82,8 @@ export async function DELETE(request, { params }){
  *   delete:
  *      summary: 출제자에 한하여, 특정 스낵의 특정 퀴즈를 삭제합니다.
  *      tags: [Snack]
+ *      security:
+ *       - cookieAuth: []  
  *      parameters:
  *       - in: path
  *         name: snackId

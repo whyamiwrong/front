@@ -70,7 +70,7 @@ export async function GET(req, { params }){
             });
         }
 
-        let avg_score = ((tot_score / tot) * 100);
+        let avg_score = ((tot_score / tot));
         let avg_duration = ((tot_duration / tot));
 
         avg_score.toFixed(1);
