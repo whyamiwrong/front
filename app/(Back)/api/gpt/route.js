@@ -53,7 +53,7 @@ export async function POST(request) {
   imageParts = [
     urls[0], urls[1], urls[2], urls[3], urls[4], urls[5], urls[6], urls[7], urls[8], urls[9]
   ];
-  }
+  
   // 이미지 받은거 data url로 변환해서 넘기는 거까지
   
     if (session.version == 'image') result = await model.generateContent([prompt, ...imageParts]);
@@ -78,6 +78,7 @@ export async function POST(request) {
 
     // POST 함수 호출
     const {username} = getVerified();
+
     const newQuiz = await prisma.snack_quiz.create({
         data: {
             snack_id: session.snack_id,

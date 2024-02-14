@@ -7,7 +7,9 @@ import Link from 'next/link'
 
 
 const Wrapper = styled.div`
-  width: 100%;
+
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -40,7 +42,7 @@ function MainTitle({ text, bottomgap, isarrow, onClick }) {
     <Margin height="30"/>
     
       <Wrapper2  onClick={onClick}>
-        <Typo size="1.5rem" weight="700" lineheight="0.1">{text}</Typo>
+        <Typo size="1.2rem" weight="700" lineheight="0.1">{text}</Typo>
         {isarrow && (
           <MdArrowForwardIos
             style={{ fontSize: 16, marginTop: 2, marginLeft: 3 }}

@@ -135,7 +135,7 @@ export async function POST(request, { params } ){
 
     const runCode = async () => {
         try{
-            const response = await fetch('https://judge-worker.run.goorm.io/submit/check_answer',{
+            const response = await fetch(`${process.env.JUDGE_WORKER}/submit/check_answer`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -164,6 +164,8 @@ export async function POST(request, { params } ){
     const result = await runCode({code, inputs,checks});
     console.log(result)
     
+    await update_submissions(problem_id, result.correct);
+
     if(result.correct==1){
         console.log("happy")
         await update_solved()
@@ -195,7 +197,32 @@ async function update_solved(){
     }
 }
     
+async function update_submissions(problem_id, is_correct){
 
+    try{
+        const { user_id, username } = getVerified();
+        
+        if(is_correct == 1){
+            const solved = await prisma.submissions.create({
+                data:{
+                    problem_id: problem_id,
+                    user_id: user_id,
+                    is_correct: 1,
+                },
+            });
+        } else {
+            const solved = await prisma.submissions.create({
+                data:{
+                    problem_id: problem_id,
+                    user_id: user_id,
+                    is_correct: 0,
+                },
+            });
+        }
+    } catch (error){
+        return error;
+    }
+}
 
 // model testcases {
 //     testcase_id       Int               @id @default(autoincrement())
