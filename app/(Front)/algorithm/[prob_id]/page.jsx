@@ -15,12 +15,17 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Button
+  Button,
+  Modal
+  
 } from "@mui/material";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-
+import IconButton from '@mui/material/IconButton';
+import HighlightIcon from '@mui/icons-material/Highlight';
+import Image from 'next/image';
 import LoadError from "./load_error";
-
+import Margin from "components/Margin/Margin";
+import CloseIcon from '@mui/icons-material/Close';
 // const problem_data = {
 //   description: "문제 설명",
 //   time_limit: 1000,
@@ -70,7 +75,15 @@ export default function Algorithm({ params }) {
 
   const [problem_data, setProblemData] = React.useState(null);
   const editorRef = React.useRef(null);
+  const [openModal, setOpenModal] = React.useState(false);
 
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  
   React.useEffect(() => {
     const getProblem = async () => {
       const res = await axios.get(`/api/problems/${params.prob_id}`);
@@ -122,8 +135,77 @@ export default function Algorithm({ params }) {
         gap: "42px",
       }}
     >
+    <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          position: 'absolute',
+          width: '80vw',
+          maxWidth: '600px',
+          height: '80vh',
+          maxHeight: '600px',
+          bgcolor: 'background.paper',
+          border: 'none',
+          borderRadius: '20px',
+          boxShadow: 24,
+          p: 2,
+          top: '55%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          overflowY: 'auto', // 스크롤 추가
+        }}>
+        <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        mb: 0, // 하단 여백 추가
+      }}
+    >
+      <Box>
+        <Image src="/img/Logo/WhyWrongLogo2.png" width={150} height={60} />
+      </Box>
+      <IconButton
+        aria-label="close"
+        onClick={handleCloseModal}
+        sx={{
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
+    </Box>
+    {/* AI CODE HINT */}
+    <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#6B308F', mb: 2 }}>
+      AI CODE HINT
+    </Typography>
+    <Margin height='20'/>
+          {/* 여기에 원하는 텍스트 추가  여기에 코드가 들어가면 제대로 출력이 되는지 모르겠음 연결해봐야 할듯*/}
+          <Typography variant="body1" sx={{ fontSize: "16px", lineHeight: "1.6" }}>
+            {/* 첫 번째 문장 */}
+            원하는 내용을 여기에 추가하세요. 이노베이션 아카데미(Innovation Academy)는 혁신과 창의성을 중심으로 하는 교육기관으로, 학생들에게 미래 사회에서 필요한 역량과 지식을 제공하는 핵심적인 역할을 합니다. 
+
+            <br />
+            {/* 두 번째 문장 */}
+            이 아카데미는 전통적인 교육 방식을 벗어나 새로운 접근법과 학습 경험을 제공하여 학생들이 문제를 해결하고 혁신적인 아이디어를 발전시킬 수 있도록 돕습니다.
+            <br />
+            {/* 세 번째 문장 */}
+            이노베이션 아카데미는 학생 중심의 학습 환경을 조성하여, 학생들이 자신의 관심과 역량을 발휘할 수 있는 기회를 제공합니다. 학생들은 실제 문제 해결에 대한 프로젝트를 수행하고, 팀원들과 협력하여 창의적인 솔루션을 찾아냅니다. 
+
+
+
+          </Typography>
+        </Box>
+    </Modal> 
       <Typography variant="h4">
         <span className="basic-gray">{`#${params.prob_id}`}</span> {problem_data.title}
+        <IconButton onClick={handleOpenModal}>
+          <HighlightIcon />
+        </IconButton>
       </Typography>
       <Grid container spacing={2} rowSpacing={4}>
         <Grid item xs={12} sm={6}>
