@@ -91,7 +91,7 @@ export async function POST(request) {
     });
 
     return Response.json(newQuiz)}
-
+  }
     catch(error){
         console.error('Error:', error);
 
@@ -101,3 +101,50 @@ export async function POST(request) {
         });
     }
 } 
+
+/**
+ * @swagger
+ * /gpt:
+ *   post:
+ *     security:
+ *       - cookieAuth: [] 
+ *     summary: 주어진 이미지나 텍스트에 따라 생성된 OX 문제 또는 객관식 문제를 반환합니다.
+ *     tags: [Gemini]
+ *     requestBody:
+ *       description: 문제의 버전, 문제의 타입, 이미지 URL
+ *       required: true
+ *       content:
+ *         application/json:
+ *           example:
+ *             snack_id : 1
+ *             version : images
+ *             type : multi
+ *             subject : 다익스트라
+ *             difficulty : medium
+ *             images : 
+ *                 - "https://example.com/image1.png"
+ *                 - "https://example.com/image2.png"
+ *                 - "https://example.com/image3.png"
+ *              
+ *     responses:
+ *       200:
+ *         description: 성공적인 응답
+ *         content:
+ *           application/json:
+ *             example:
+ *               - snack_id: 1
+ *                 title: 다익스트라 알고리즘 문제
+ *                 description: 다익스트라 알고리즘과 관련하여 알맞은 정답을 고르세요.
+ *                 selections: 
+ *                   1: "다익스트라 알고리즘은 모든 출발점에서 모든 도착점까지의 최단 경로를 구할 수 있다."
+ *                   2: "다익스트라 알고리즘을 우선순위 큐를 이용하여 구현하였을 때 O(V^2)의 시간이 소요된다."
+ *                   3: "다익스트라 알고리즘은 음의 가중치를 갖는 간선이 있는 그래프에서는 유효하지 않다."
+ *                   4: "다익스트라 알고리즘은 사이클(Cycle)이 있는 그래프에서도 유효하다."
+ *                   answer: "3"
+ *                 created_by: abcd
+ *                 tag:
+ *                   1: "그래프"
+ *       500:
+ *         description: Internal Server Error
+ * 
+ */

@@ -11,10 +11,10 @@ export async function POST(request) {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    // gemini가 생성한 코드 힌트 data 포함
+    // gemini가 생성한 코드 힌트 data 포함  
     console.log(text);
 
-    return Response.json(response)}
+    return Response.json(text)}
     catch(error){
         console.error('Error:', error);
 
@@ -24,3 +24,29 @@ export async function POST(request) {
         });
     }
 } 
+
+/**
+ * @swagger
+ * /hint:
+ *   post:
+ *     summary: 사용자의 코드에 대한 힌트를 반환합니다.
+ *     tags: [Gemini]
+ *     requestBody:
+ *       description: 문제의 설명, 사용자의 코드
+ *       required: true
+ *       content:
+ *         application/json:
+ *           example:
+ *             algorithm: 양의 정수 A와 B가 주어졌을 때, A - B의 결과를 출력하는 프로그램을 작성하세요.
+ *             code: "#include <iostream>\\n using namespace std;\\n int main()\\n { cout << \"Hello, World!\"; \\nreturn 0; \\n}"
+ *     responses:
+ *       200:
+ *         description: 성공적인 응답
+ *         content:
+ *           application/json:
+ *             example:
+ *               - text: "* `iostream` 헤더는 `std::cout`을 사용하려면 필요합니다.\n* `main` 함수는 `int` 형을 반환합니다.\n* 현재 코드는 `A`와 `B`를 입력받지 않습니다.\n* `A`와 `B`를 입력받으려면 `cin`을 사용해야 합니다.\n* `A`와 `B`를 빼서 결과를 출력하려면 연산자 `-`를 사용해야 합니다."
+ *       500:
+ *         description: Internal Server Error
+ * 
+ */
