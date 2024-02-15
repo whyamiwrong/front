@@ -85,7 +85,7 @@ export default function Snack() {
                 }
               </Wrapper>
             
-              <Box sx={{ '& > :not(style)': { m: 1 }, position: "absolute", right: "24px", bottom: "24px" }}>
+              <Box sx={{ '& > :not(style)': { m: 1 }, position: "fixed", right: "5vw", bottom: "5vh" }}>
                 <SouthEast className="blinking" color="secondary" sx={{ height: "90px", width: "90px"}} />
                 <Fab onClick={makingSnack} color="secondary" aria-label="add" size="large">
                   <Edit />
