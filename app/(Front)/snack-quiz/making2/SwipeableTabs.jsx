@@ -38,8 +38,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ width: "100%", height: "100%" }}>
-          <Typography>{children}</Typography>
+        <Box sx={{ p: 3 }}>
+          {children}
         </Box>
       )}
     </div>
@@ -53,7 +53,7 @@ function allyProps(index) {
   };
 }
 
-const SwipeableTabs = ({ value, setValue }) => {
+const SwipeableTabs = ({ value, setValue, imageTab, makingTab, problemTab }) => {
   const theme = useTheme();
   const [expanded, setExpanded] = React.useState(true);
 
@@ -77,13 +77,13 @@ const SwipeableTabs = ({ value, setValue }) => {
         onChangeIndex={handleChangeTabIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
+          {imageTab}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          {makingTab}
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
+          {problemTab}
         </TabPanel>
       </SwipeableViews>
 
@@ -145,7 +145,6 @@ const SwipeableTabs = ({ value, setValue }) => {
           </div>
         </Collapse>
 
-        
         <div
           style={{
             display: "flex",
