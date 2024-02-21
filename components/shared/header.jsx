@@ -76,9 +76,9 @@ export default function Header({ auth_user = false }) {
               <LuMenu />  
               </IconButton>
               <Link href="/" style={{ textDecoration: 'none' }}>
-                <Typography variant="h6" color="text.primary" sx={{ cursor: 'pointer' }}>
+                {/* <Typography variant="h6" color="text.primary" sx={{ cursor: 'pointer' }}>
                   WhyamiWrong
-                </Typography>
+                </Typography> */}
               </Link>
             </Box>
           ) : (
@@ -110,13 +110,13 @@ export default function Header({ auth_user = false }) {
                 <Box sx={{ display: 'flex', gap: '8px' }}>
                   {!auth_user ? (
                     <>
-                      <Button variant="outlined" color="secondary" href="/login">로그인</Button>
-                      <Button variant="contained" color="secondary" href="/signup" sx={{boxShadow: 'none'}}>회원가입</Button>
+                      <Button variant="outlined" size="small" color="secondary" href="/login">로그인</Button>
+                      <Button variant="contained" size="small" color="secondary" href="/signup" sx={{boxShadow: 'none'}}>회원가입</Button>
                     </>
                   ) : (
                     <>
-                      <Button variant="outlined" color="secondary" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
-                      <Button variant="contained" color="secondary" sx={{boxShadow: 'none'}} href="/">내 정보</Button>
+                      <Button variant="outlined" size="small" color="secondary" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
+                      <Button variant="contained" size="small" color="secondary" sx={{boxShadow: 'none'}} href="/">내 정보</Button>
                     </>
                   )}
                 </Box>
@@ -139,13 +139,13 @@ export default function Header({ auth_user = false }) {
                 )}
                 {!auth_user ? (
                   <>
-                    <Button variant="outlined" color="secondary" href="/login">로그인</Button>
-                    <Button variant="contained" color="secondary" href="/signup" sx={{boxShadow: 'none'}}>회원가입</Button>
+                    <Button variant="outlined" size="small" color="secondary" href="/login">로그인</Button>
+                    <Button variant="contained" size="small" color="secondary" href="/signup" sx={{boxShadow: 'none'}}>회원가입</Button>
                   </>
                 ) : (
                   <>
-                    <Button variant="outlined" color="secondary" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
-                    <Button variant="contained" color="secondary" sx={{boxShadow: 'none'}} href="/">내 정보</Button>
+                    <Button variant="outlined" size="small" color="secondary" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
+                    <Button variant="contained" size="small" color="secondary" sx={{boxShadow: 'none'}} href="/">내 정보</Button>
                   </>
                 )}
               </Box>
@@ -179,13 +179,13 @@ export default function Header({ auth_user = false }) {
             </Button>
             {!auth_user ? (
               <>
-                <Button href="/login" color="secondary">로그인</Button>
-                <Button href="/signup" color="secondary" sx={{boxShadow: 'none'}}>회원가입</Button>
+                <Button href="/login" size="small" color="secondary">로그인</Button>
+                <Button href="/signup" size="small" color="secondary" sx={{boxShadow: 'none'}}>회원가입</Button>
               </>
             ) : (
               <>
-                <Button color="secondary" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
-                <Button color="secondary" sx={{boxShadow: 'none'}} href="/">내 정보</Button>
+                <Button color="secondary" size="small" onClick={handleLogout}>{auth_user?.username} 로그아웃</Button>
+                <Button color="secondary" size="small" sx={{boxShadow: 'none'}} href="/">내 정보</Button>
               </>
             )}
           </Box>
