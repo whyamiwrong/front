@@ -27,7 +27,7 @@ import { useTheme } from '@mui/material/styles';
 
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, expanded, ...other } = props;
 
   return (
     <div
@@ -36,9 +36,12 @@ function TabPanel(props) {
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
+      style={{
+        height: `calc(100vh - ${expanded ? '292' : '217'}px)`
+      }}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           {children}
         </Box>
       )}
@@ -53,9 +56,8 @@ function allyProps(index) {
   };
 }
 
-const SwipeableTabs = ({ value, setValue, imageTab, makingTab, problemTab }) => {
+const SwipeableTabs = ({ value, setValue, expanded, setExpanded, handleFileAdd, ImageTab, MakingTab, ProblemTab }) => {
   const theme = useTheme();
-  const [expanded, setExpanded] = React.useState(true);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -70,25 +72,28 @@ const SwipeableTabs = ({ value, setValue, imageTab, makingTab, problemTab }) => 
   }
 
   return (
-    <Box>
+    <>
+      {/* Tab Pannel Page */}
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={value}
         onChangeIndex={handleChangeTabIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          {imageTab}
+        <TabPanel value={value} index={0} expanded={expanded} dir={theme.direction}>
+          <ImageTab />
         </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          {makingTab}
+        <TabPanel value={value} index={1} expanded={expanded} dir={theme.direction}>
+          <MakingTab />
         </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          {problemTab}
+        <TabPanel value={value} index={2} expanded={expanded} dir={theme.direction}>
+          <ProblemTab />
         </TabPanel>
       </SwipeableViews>
 
-      
 
+
+
+      {/* App Bar */}
       <AppBar position="fixed" color="transparent" sx={{ top: 'auto', bottom: 0, alignItems: "center", paddingBottom: "36px" }}>
         <Tabs
           value={value}
@@ -100,8 +105,8 @@ const SwipeableTabs = ({ value, setValue, imageTab, makingTab, problemTab }) => 
           sx={{ width: "100%", maxWidth: "540px", padding: "0 20px" }}
         >
           <Tab label="이미지" {...allyProps(0)} />
-          <Tab label="문제" {...allyProps(1)} />
-          <Tab label="출제문제들" {...allyProps(2)} />
+          <Tab label="출제" {...allyProps(1)} />
+          <Tab label="문제" {...allyProps(2)} />
           
           <IconButton onClick={() => handleExpand()}>
             {expanded ?
@@ -124,8 +129,9 @@ const SwipeableTabs = ({ value, setValue, imageTab, makingTab, problemTab }) => 
             <IconButton disabled>
               <AddAPhoto fontSize="large" />
             </IconButton>
-            <IconButton>
-              <AddPhotoAlternate fontSize="large" />
+            <IconButton component="label" color="primary" aria-label="add">
+              <AddPhotoAlternate onClick={() => setValue(0)} fontSize="large" />
+              <VisuallyHiddenInput type="file" onChange={handleFileAdd} />
             </IconButton>
             <IconButton>
               <PictureAsPdf fontSize="large" />
@@ -167,8 +173,21 @@ const SwipeableTabs = ({ value, setValue, imageTab, makingTab, problemTab }) => 
           </IconButton>
         </div>
       </AppBar>
-    </Box>
+    </>
   );
 }
+
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 
 export default SwipeableTabs;
