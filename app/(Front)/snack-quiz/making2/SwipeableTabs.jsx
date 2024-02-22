@@ -56,8 +56,13 @@ function allyProps(index) {
   };
 }
 
-const SwipeableTabs = ({ value, setValue, expanded, setExpanded, handleFileAdd, ImageTab, MakingTab, ProblemTab }) => {
+const SwipeableTabs = ({ value, setValue, expanded, setExpanded, handleFileAdd, handleMessageSend, isPromptLoading, ImageTab, MakingTab, ProblemTab }) => {
   const theme = useTheme();
+  const [localMessage, setLocalMessage] = React.useState('');
+
+  const handleLocalMessageChange = (event) => {
+    setLocalMessage(event.target.value);
+  }
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -164,10 +169,12 @@ const SwipeableTabs = ({ value, setValue, expanded, setExpanded, handleFileAdd, 
             padding: "0 20px",
           }}
         >
-          <TextField label="지시문" color="secondary" size="small" variant="outlined" multiline fullWidth />
+          <TextField label="지시문" color="secondary" size="small" variant="outlined" multiline fullWidth disabled={isPromptLoading} onChange={(event) => handleLocalMessageChange(event)} value={localMessage} />
           <IconButton
             color="secondary"
             variant="contained"
+            disabled={isPromptLoading}
+            onClick={() => {handleMessageSend(localMessage); setLocalMessage('');}}
           >
             <Send />
           </IconButton>
