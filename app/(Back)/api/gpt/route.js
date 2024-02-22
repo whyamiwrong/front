@@ -103,15 +103,15 @@ export async function POST(request) {
     const t_tag = data.tag;
 
     // POST 함수 호출
-    const { username } = getVerified();
-
+    //const { username } = getVerified();
+    const user = "guest";
     const newQuiz = await prisma.snack_quiz.create({
         data: {
             snack_id: session.snack_id,
             title: t_title,
             description: t_description,
             selections: t_selections,
-            created_by: username,
+            created_by: user,
             tag: t_tag,
         },
     });
