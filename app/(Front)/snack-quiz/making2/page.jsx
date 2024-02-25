@@ -238,26 +238,29 @@ const MyPage = () => {
       // <MakingTab></MakingTab>
       <>
         <Container>
-          <Skeleton variant="rectangular" width="100%" height="300px" sx={{ bgcolor: 'white-gray', borderRadius: '16px' }}/><Box>
-          <TransitionGroup>
-            {snackQuizData.map((quiz, idx) => (
-              <Collapse key={idx} unmountOnExit>
-                <QuizCard
-                  // key={quiz.snack_quiz_id}
-                  quizId={quiz.snack_quiz_id} // 퀴즈 아이디 추가
-                  quiz_title={quiz.title}
-                  text={quiz.description}
-                  b1={quiz.selections["1"]}
-                  b2={quiz.selections["2"]}
-                  b3={quiz.selections["3"]}
-                  b4={quiz.selections["4"]}
-                  selectedButton={selectedButtons[quiz.snack_quiz_id]} // 각 퀴즈에 대한 선택된 버튼 상태
-                  // onButtonClick={handleButtonClick} // 버튼 클릭 핸들러
-                />
-              </Collapse>
-            ))}
-          </TransitionGroup>
-        </Box>
+          { (isPromptLoading || isLoading) ?
+            <Skeleton variant="rectangular" width="100%" height="300px" sx={{ bgcolor: 'white-gray', borderRadius: '16px' }}/> :
+            <Box>
+              <TransitionGroup>
+                {snackQuizData.map((quiz, idx) => (
+                  <Collapse key={idx} unmountOnExit>
+                    <QuizCard
+                      // key={quiz.snack_quiz_id}
+                      quizId={quiz.snack_quiz_id} // 퀴즈 아이디 추가
+                      quiz_title={quiz.title}
+                      text={quiz.description}
+                      b1={quiz.selections["1"]}
+                      b2={quiz.selections["2"]}
+                      b3={quiz.selections["3"]}
+                      b4={quiz.selections["4"]}
+                      selectedButton={selectedButtons[quiz.snack_quiz_id]} // 각 퀴즈에 대한 선택된 버튼 상태
+                      // onButtonClick={handleButtonClick} // 버튼 클릭 핸들러
+                    />
+                  </Collapse>
+                ))}
+            </TransitionGroup>
+          </Box>
+          }
         </Container>
       </>
     );
