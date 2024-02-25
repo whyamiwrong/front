@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSearchParams } from "next/navigation";
 import {
   styled,
   Container,
@@ -23,6 +24,7 @@ import {
   Grid,
   Skeleton,
 } from "@mui/material";
+import { TransitionGroup } from 'react-transition-group';
 import {
   AddAPhoto,
   AddPhotoAlternate,
@@ -34,11 +36,17 @@ import {
 import Image from "next/image";
 import axios from "axios";
 import Loading from "@/components/loading";
-
+import QuizCard from "@/components/Card/QuizCard/QuizCard";
 import SwipeableTabs from "./SwipeableTabs";
 
 
 const MyPage = () => {
+  const searchParams = useSearchParams();
+  const title = searchParams.get("title");
+  const snack_id = searchParams.get("snack_id");
+  const [snackQuizData, setSnackQuizData] = React.useState([]);
+  const [selectedButtons, setSelectedButtons] = React.useState({}); // 각 퀴즈별 선택된 버튼 상태
+
   const [tabValue, setTabValue] = React.useState(0);
   const [expanded, setExpanded] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -48,12 +56,33 @@ const MyPage = () => {
   const [myMessage, setMyMessage] = React.useState([]);
   const [promptMessage, setPromptMessage] = React.useState([]);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`/api/snack/${snack_id}`);
+      // 초기에 각 퀴즈의 선택 상태를 빈 객체로 설정
+      const initialSelectedButtons = response.data.reduce(
+        (acc, quiz) => ({ ...acc, [quiz.snack_quiz_id]: null }),
+        {},
+      );
+      setSelectedButtons(initialSelectedButtons);
+      console.log(selectedButtons);
+
+      setSnackQuizData(response.data.sort((a, b) => b.snack_quiz_id - a.snack_quiz_id));
+      console.log(response.data);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error("데이터를 불러오는 중 오류 발생:", error);
+      setIsLoading(false);
+    }
+  };
+
   React.useEffect(() => {
     setIsLoading(true);
     setTimeout(() => {
       setExpanded(true);
       setTabValue(1);
-      setIsLoading(false);
+      fetchData();
     }, 500);
   }, []);
 
@@ -91,28 +120,34 @@ const MyPage = () => {
     
     setMyMessage([...myMessage, msg]);
 
-    const res = await axios.post('/api/gpt', {
-      snack_id: 3,
-      version: "image",
-      type: "multi",
-      subject: "Computer Science",
-      difficulty: "medium",
-      images: images,
-    })
+    try {
+      const res = await axios.post('/api/gpt', {
+        snack_id: Number(snack_id),
+        version: "image",
+        type: "multi",
+        subject: myMessage[myMessage.length - 1],
+        difficulty: "medium",
+        images: images,
+      })
 
-    if (res.status != 200) {
-      setIsPromptLoading(false);
+      if (res.status != 200) {
+        setIsPromptLoading(false);
+        setPromptMessage([...promptMessage, "오류가 발생했습니다. 다시 시도해주세요."]);
+        return;
+      } else {
+        console.log(res);
+        const title = res.data.title;
+        const description = res.data.description;
+        let msg = <><strong>제목: </strong>{title}<br/><strong>설명</strong>{description}</>;
+        setPromptMessage([...promptMessage, msg]);
+        console.log(promptMessage);
+        await fetchData();
+
+        setIsPromptLoading(false);
+      }
+    } catch (error) {
+      console.error("Error:", error);
       setPromptMessage([...promptMessage, "오류가 발생했습니다. 다시 시도해주세요."]);
-      return;
-    } else {
-      console.log(res);
-      const title = res.data.title;
-      const description = res.data.description;
-      let msg = <><strong>제목: </strong>{title}<br/><strong>설명</strong>{description}</>;
-      setPromptMessage([...promptMessage, msg]);
-      console.log(promptMessage);
-
-      setIsPromptLoading(false);
     }
     setIsPromptLoading(false);
   }
@@ -177,7 +212,11 @@ const MyPage = () => {
                       { isPromptLoading && idx === Number(myMessage.length - 1) ?
                         [0,0,0,0].map((v, i) => <Skeleton key={i} variant="text" width={200} sx={{ bgcolor: 'white-gray' }}/> ) : (
                           // <>Computer Science</>
-                          promptMessage[idx] || ("오류가 발생했습니다. 다시 시도해주세요.")
+                          (
+                            <>
+                              { promptMessage[idx] }
+                            </>
+                          ) || ("오류가 발생했습니다. 다시 시도해주세요.")
                         )
                       }
                     </Box>
@@ -199,7 +238,26 @@ const MyPage = () => {
       // <MakingTab></MakingTab>
       <>
         <Container>
-          <Skeleton variant="rectangular" width="100%" height="300px" sx={{ bgcolor: 'white-gray', borderRadius: '16px' }}/>
+          <Skeleton variant="rectangular" width="100%" height="300px" sx={{ bgcolor: 'white-gray', borderRadius: '16px' }}/><Box>
+          <TransitionGroup>
+            {snackQuizData.map((quiz, idx) => (
+              <Collapse key={idx} unmountOnExit>
+                <QuizCard
+                  // key={quiz.snack_quiz_id}
+                  quizId={quiz.snack_quiz_id} // 퀴즈 아이디 추가
+                  quiz_title={quiz.title}
+                  text={quiz.description}
+                  b1={quiz.selections["1"]}
+                  b2={quiz.selections["2"]}
+                  b3={quiz.selections["3"]}
+                  b4={quiz.selections["4"]}
+                  selectedButton={selectedButtons[quiz.snack_quiz_id]} // 각 퀴즈에 대한 선택된 버튼 상태
+                  // onButtonClick={handleButtonClick} // 버튼 클릭 핸들러
+                />
+              </Collapse>
+            ))}
+          </TransitionGroup>
+        </Box>
         </Container>
       </>
     );
