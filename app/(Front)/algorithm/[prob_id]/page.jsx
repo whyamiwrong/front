@@ -159,7 +159,7 @@ export default function Algorithm({ params }) {
               key={output.length}
               height="100%"
               language={language}
-              value={code}
+              value={codeBlock}
               theme="vs-dark"
               options={{
                 inlineSuggest: true,
@@ -186,6 +186,12 @@ export default function Algorithm({ params }) {
           codeBlock += line + '\n';
         } else {
           // 코드 블록 외부
+         // line = line.replace("\*/g ", "• "); //모든 * 를 - 로 변경
+          line = line.replace(/\**/g, "");
+          line = line.replace(/\* /g, "‣ ");
+          line = line.replace(/\- /g, "‣ ");
+          line = line.replace(/\###/g, "❗️");
+          line = line.replace(/\##/g, "📌 ");
           output.push(
             <React.Fragment key={output.length}>
               {convertNewlineToBR(line)}
@@ -356,6 +362,7 @@ export default function Algorithm({ params }) {
               <Box sx={{ height: '300px' }}>
                 {renderTextWithCodeBlocks(hintText)}
               </Box>
+              
             )
             }
         </Box>
