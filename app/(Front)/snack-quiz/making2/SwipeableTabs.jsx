@@ -56,7 +56,17 @@ function allyProps(index) {
   };
 }
 
-const SwipeableTabs = ({ value, setValue, expanded, setExpanded, handleFileAdd, handleMessageSend, isPromptLoading, ImageTab, MakingTab, ProblemTab }) => {
+const SwipeableTabs = ({
+  value, setValue,
+  expanded, setExpanded,
+
+  typeOption, setTypeOption,
+  difficultyOption, setDifficultyOption,
+  versionOption, setVersionOption,
+
+  handleFileAdd, handleMessageSend, isPromptLoading,
+  ImageTab, MakingTab, ProblemTab
+}) => {
   const theme = useTheme();
   const [localMessage, setLocalMessage] = React.useState('');
 
@@ -74,6 +84,18 @@ const SwipeableTabs = ({ value, setValue, expanded, setExpanded, handleFileAdd, 
 
   const handleExpand = () => {
     setExpanded(!expanded);
+  }
+
+  const handleTypeOptionChange = (event) => {
+    setTypeOption(event.target.value);
+  }
+
+  const handleDifficultyOptionChange = (event) => {
+    setDifficultyOption(event.target.value);
+  }
+
+  const handleVersionOptionChange = (event) => {
+    setVersionOption(event.target.value);
   }
 
   return (
@@ -131,26 +153,54 @@ const SwipeableTabs = ({ value, setValue, expanded, setExpanded, handleFileAdd, 
               marginTop: "20px",
             }}
           >
-            <IconButton disabled>
+            {/* <IconButton disabled>
               <AddAPhoto fontSize="large" />
-            </IconButton>
+            </IconButton> */}
             <IconButton component="label" color="primary" aria-label="add">
               <AddPhotoAlternate onClick={() => setValue(0)} fontSize="large" />
               <VisuallyHiddenInput type="file" onChange={handleFileAdd} />
             </IconButton>
-            <IconButton>
+            {/* <IconButton>
               <PictureAsPdf fontSize="large" />
-            </IconButton>
+            </IconButton> */}
             <FormControl
               variant="outlined"
               size="small"
-              sx={{ padding: "8px" }}
+              // sx={{ padding: "8px" }}
             >
-              <InputLabel id="option-label">옵션 선택</InputLabel>
-              <Select labelId="option-label" defaultValue={10} label="문제 양식">
-                <MenuItem value={10}> 객관식 </MenuItem>
-                <MenuItem value={20}> 양자택일 </MenuItem>
-                <MenuItem value={30}> O/X </MenuItem>
+              <InputLabel id="option-label">문제</InputLabel>
+              <Select labelId="option-label" label="문제"
+                value={typeOption} onChange={handleTypeOptionChange}
+              >
+                <MenuItem value={"multi"}> 객관식 </MenuItem>
+                <MenuItem value={"ox"}> O/X </MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="outlined"
+              size="small"
+              // sx={{ padding: "8px" }}
+            >
+              <InputLabel id="option-label">첨부</InputLabel>
+              <Select labelId="option-label" label="첨부"
+                value={versionOption} onChange={handleVersionOptionChange}
+              >
+                <MenuItem value={"text"}>없음</MenuItem>
+                <MenuItem value={"image"}>이미지</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="outlined"
+              size="small"
+              // sx={{ padding: "8px" }}
+            >
+              <InputLabel id="option-label">난이도</InputLabel>
+              <Select labelId="option-label" label="난이도"
+                value={difficultyOption} onChange={handleDifficultyOptionChange}
+              >
+                <MenuItem value={"easy"}>쉬움</MenuItem>
+                <MenuItem value={"medium"}>보통</MenuItem>
+                <MenuItem value={"hard"}>어려움</MenuItem>
               </Select>
             </FormControl>
           </div>
@@ -169,7 +219,7 @@ const SwipeableTabs = ({ value, setValue, expanded, setExpanded, handleFileAdd, 
             padding: "0 20px",
           }}
         >
-          <TextField label="지시문" color="secondary" size="small" variant="outlined" multiline fullWidth disabled={isPromptLoading} onChange={(event) => handleLocalMessageChange(event)} value={localMessage} />
+          <TextField label="지시문을 입력해주세요." color="secondary" size="small" variant="outlined" multiline fullWidth disabled={isPromptLoading} onChange={(event) => handleLocalMessageChange(event)} value={localMessage} />
           <IconButton
             color="secondary"
             variant="contained"

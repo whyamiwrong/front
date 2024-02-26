@@ -56,6 +56,10 @@ const MyPage = () => {
   const [myMessage, setMyMessage] = React.useState([]);
   const [promptMessage, setPromptMessage] = React.useState([]);
 
+  const [typeOption, setTypeOption] = React.useState("multi"); // multi, ox
+  const [difficultyOption, setDifficultyOption] = React.useState("medium"); // easy, medium, hard
+  const [versionOption, setVersionOption] = React.useState("text"); // image, text
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`/api/snack/${snack_id}`);
@@ -92,6 +96,8 @@ const MyPage = () => {
       return;
     }
 
+    setVersionOption("image");
+
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -102,6 +108,7 @@ const MyPage = () => {
         // 예: sendToApi(base64);
       };
       reader.readAsDataURL(file);
+      setExpanded(true);
     }
   };
 
@@ -112,8 +119,19 @@ const MyPage = () => {
   }
 
   async function handleMessageSend(msg) {
+    if (msg === "") {
+      alert("지시문을 입력해주세요.");
+      return;
+    }
+
+    if (versionOption === "image" && images.length === 0) {
+      alert("이미지로 문제를 만들기 위해서 이미지를 업로드해주세요.");
+      return;
+    }
+
     setTabValue(1);
     setIsPromptLoading(true);
+    setExpanded(false);
     setTimeout(() => {
       document.querySelector("#footer").scrollIntoView();
     }, 1000);
@@ -123,10 +141,10 @@ const MyPage = () => {
     try {
       const res = await axios.post('/api/gpt', {
         snack_id: Number(snack_id),
-        version: "image",
-        type: "multi",
+        version: versionOption,
+        type: typeOption,
         subject: myMessage[myMessage.length - 1],
-        difficulty: "medium",
+        difficulty: difficultyOption,
         images: images,
       })
 
@@ -275,6 +293,14 @@ const MyPage = () => {
         setValue={setTabValue}
         expanded={expanded}
         setExpanded={setExpanded}
+
+        typeOption={typeOption}
+        setTypeOption={setTypeOption}
+        difficultyOption={difficultyOption}
+        setDifficultyOption={setDifficultyOption}
+        versionOption={versionOption}
+        setVersionOption={setVersionOption}
+
         ImageTab={ImageTab}
         MakingTab={MakingTab}
         ProblemTab={ProblemTab}
