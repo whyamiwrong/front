@@ -42,7 +42,6 @@ export default function Making({ params }) {
       setSnackQuizData(response.data.sort((a, b) => b.snack_quiz_id - a.snack_quiz_id));
       console.log(response.data);
 
-      setStartTime(new Date());
       setIsLoading(false);
     } catch (error) {
       console.error("데이터를 불러오는 중 오류 발생:", error);
