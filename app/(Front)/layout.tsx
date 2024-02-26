@@ -10,7 +10,7 @@ import Wrapper from "@/components/shared/wrapper";
 import Hotjar from "@/lib/hotjar";
 
 export const metadata = {
-  title: "WhyisWrong",
+  title: "WhyAmIWrong",
   description: "맞았는데 왜 틀렸지?",
 };
 
